@@ -1,0 +1,359 @@
+﻿@using VolunteerHub.Constants
+
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8" />
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0" />
+
+    <title>
+        @ViewData["Title"] - VolunteerHub
+    </title>
+
+
+    <link rel="stylesheet"
+          href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+
+    <link rel="stylesheet"
+          href="~/css/site.css"
+          asp-append-version="true" />
+
+    <link rel="stylesheet"
+          href="~/VolunteerHub.styles.css"
+          asp-append-version="true" />
+
+</head>
+
+
+<body>
+
+    <!-- NAVBAR -->
+
+    <header>
+
+        <nav class="navbar navbar-expand-lg volunteer-navbar">
+
+            <div class="container">
+
+                <!-- BRAND -->
+
+                <a class="navbar-brand volunteer-brand"
+                   asp-controller="Home"
+                   asp-action="Index">
+
+                    <span class="brand-icon">
+                        V
+                    </span>
+
+                    <span class="brand-text">
+                        VolunteerHub
+                    </span>
+
+                </a>
+
+
+                <!-- MOBILE BUTTON -->
+
+                <button class="navbar-toggler"
+                        type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#mainNavbar"
+                        aria-controls="mainNavbar"
+                        aria-expanded="false"
+                        aria-label="Toggle navigation">
+
+                    <span class="navbar-toggler-icon"></span>
+
+                </button>
+
+
+                <!-- NAVIGATION -->
+
+                <div class="collapse navbar-collapse"
+                     id="mainNavbar">
+
+
+                    <!-- LEFT SIDE -->
+
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+                        <li class="nav-item">
+
+                            <a class="nav-link"
+                               asp-controller="Home"
+                               asp-action="Index">
+
+                                Home
+
+                            </a>
+
+                        </li>
+
+
+                        <li class="nav-item">
+
+                            <a class="nav-link"
+                               asp-controller="VolunteerActions"
+                               asp-action="Index">
+
+                                Opportunities
+
+                            </a>
+
+                        </li>
+
+
+                        @if (User.Identity?.IsAuthenticated == true)
+                        {
+
+                            <!-- VOLUNTEER -->
+
+                            @if (User.IsInRole(UserRoles.Volunteer))
+                            {
+                                <li class="nav-item">
+
+                                    <a class="nav-link"
+                                       asp-controller="Dashboard"
+                                       asp-action="Volunteer">
+
+                                        Dashboard
+
+                                    </a>
+
+                                </li>
+
+
+                                <li class="nav-item">
+
+                                    <a class="nav-link"
+                                       asp-controller="ParticipationRequests"
+                                       asp-action="MyRequests">
+
+                                        My Applications
+
+                                    </a>
+
+                                </li>
+
+
+                                <li class="nav-item">
+
+                                    <a class="nav-link"
+                                       asp-controller="Profile"
+                                       asp-action="Index">
+
+                                        Profile
+
+                                    </a>
+
+                                </li>
+                            }
+
+
+                            <!-- ORGANIZER -->
+
+                            @if (User.IsInRole(UserRoles.Organizer))
+                            {
+                                <li class="nav-item">
+
+                                    <a class="nav-link"
+                                       asp-controller="Dashboard"
+                                       asp-action="Organizer">
+
+                                        Dashboard
+
+                                    </a>
+
+                                </li>
+
+
+                                <li class="nav-item">
+
+                                    <a class="nav-link"
+                                       asp-controller="VolunteerActions"
+                                       asp-action="MyActions">
+
+                                        My Actions
+
+                                    </a>
+
+                                </li>
+
+
+                                <li class="nav-item">
+
+                                    <a class="nav-link"
+                                       asp-controller="OrganizerRequests"
+                                       asp-action="Index">
+
+                                        Applications
+
+                                    </a>
+
+                                </li>
+
+
+                                <li class="nav-item">
+
+                                    <a class="nav-link"
+                                       asp-controller="Profile"
+                                       asp-action="Index">
+
+                                        Profile
+
+                                    </a>
+
+                                </li>
+                            }
+
+
+                            <!-- ADMIN -->
+
+                            @if (User.IsInRole(UserRoles.Admin))
+                            {
+                                <li class="nav-item">
+
+                                    <a class="nav-link"
+                                       asp-controller="Admin"
+                                       asp-action="Index">
+
+                                        Admin Dashboard
+
+                                    </a>
+
+                                </li>
+
+
+                                <li class="nav-item">
+
+                                    <a class="nav-link"
+                                       asp-controller="Admin"
+                                       asp-action="Users">
+
+                                        Users
+
+                                    </a>
+
+                                </li>
+
+
+                                <li class="nav-item">
+
+                                    <a class="nav-link"
+                                       asp-controller="Admin"
+                                       asp-action="Actions">
+
+                                        Actions
+
+                                    </a>
+
+                                </li>
+                            }
+                        }
+
+                    </ul>
+
+
+                    <!-- LOGIN / USER -->
+
+                    <div class="navbar-user">
+
+                        <partial name="_LoginPartial" />
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </nav>
+
+    </header>
+
+
+    <!-- MAIN CONTENT -->
+
+    <main class="main-content">
+
+        <div class="container">
+
+            @RenderBody()
+
+        </div>
+
+    </main>
+
+
+    <!-- FOOTER -->
+
+    <footer class="volunteer-footer">
+
+        <div class="container">
+
+            <div class="row align-items-center g-4">
+
+                <div class="col-md-6">
+
+                    <div class="footer-brand">
+
+                        <span class="brand-icon brand-icon-small">
+                            V
+                        </span>
+
+                        <span>
+                            VolunteerHub
+                        </span>
+
+                    </div>
+
+
+                    <p class="footer-description">
+                        Connecting people with meaningful opportunities
+                        to create positive change in their communities.
+                    </p>
+
+                </div>
+
+
+                <div class="col-md-6 text-md-end">
+
+                    <p class="footer-copy">
+                        &copy; @DateTime.Now.Year VolunteerHub
+                    </p>
+
+                    <p class="footer-subtitle">
+                        Community driven. Built for impact.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </footer>
+
+
+    <!-- SCRIPTS -->
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script src="~/js/site.js"
+            asp-append-version="true">
+    </script>
+
+
+    @await RenderSectionAsync(
+        "Scripts",
+        required: false)
+
+</body>
+
+</html>

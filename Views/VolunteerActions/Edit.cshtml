@@ -1,0 +1,453 @@
+﻿@model VolunteerHub.ViewModels.VolunteerActionFormViewModel
+
+@{
+    ViewData["Title"] = "Edit Opportunity";
+}
+
+<div class="row justify-content-center">
+
+    <div class="col-xl-9 col-lg-10">
+
+        <div class="mb-4">
+
+            <div class="section-eyebrow">
+                Organizer
+            </div>
+
+            <h1 class="mb-2">
+                Edit Opportunity
+            </h1>
+
+            <p class="text-muted mb-0">
+                Update the information for this volunteering opportunity.
+            </p>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="card-body p-4 p-md-5">
+
+                <form asp-action="Edit"
+                      asp-route-id="@Model.Id"
+                      method="post">
+
+                    <input asp-for="Id"
+                           type="hidden" />
+
+
+                    <div asp-validation-summary="ModelOnly"
+                         class="text-danger mb-4">
+                    </div>
+
+
+                    <!-- BASIC INFORMATION -->
+
+                    <h2 class="h4 mb-4">
+                        Basic Information
+                    </h2>
+
+
+                    <div class="mb-4">
+
+                        <label asp-for="Title"
+                               class="form-label">
+                        </label>
+
+                        <input asp-for="Title"
+                               class="form-control" />
+
+                        <span asp-validation-for="Title"
+                              class="text-danger">
+                        </span>
+
+                    </div>
+
+
+                    <div class="mb-4">
+
+                        <label asp-for="Description"
+                               class="form-label">
+                        </label>
+
+                        <textarea asp-for="Description"
+                                  class="form-control"
+                                  rows="6">
+                        </textarea>
+
+                        <span asp-validation-for="Description"
+                              class="text-danger">
+                        </span>
+
+                    </div>
+
+
+                    <div class="mb-4">
+
+                        <label asp-for="Category"
+                               class="form-label">
+                        </label>
+
+                        <select asp-for="Category"
+                                asp-items="Model.Categories"
+                                class="form-select">
+
+                            <option value="">
+                                Select category
+                            </option>
+
+                        </select>
+
+                        <span asp-validation-for="Category"
+                              class="text-danger">
+                        </span>
+
+                    </div>
+
+
+                    <hr class="my-5" />
+
+
+                    <!-- LOCATION -->
+
+                    <h2 class="h4 mb-4">
+                        Location
+                    </h2>
+
+
+                    <div class="row g-4">
+
+                        <div class="col-md-6">
+
+                            <label asp-for="CountryId"
+                                   class="form-label">
+                                Country
+                            </label>
+
+                            <select asp-for="CountryId"
+                                    asp-items="Model.Countries"
+                                    id="countrySelect"
+                                    class="form-select">
+
+                                <option value="">
+                                    Select country
+                                </option>
+
+                            </select>
+
+                            <span asp-validation-for="CountryId"
+                                  class="text-danger">
+                            </span>
+
+                        </div>
+
+
+                        <div class="col-md-6">
+
+                            <label asp-for="CityId"
+                                   class="form-label">
+                                City
+                            </label>
+
+                            <select asp-for="CityId"
+                                    asp-items="Model.Cities"
+                                    id="citySelect"
+                                    class="form-select">
+
+                                <option value="">
+                                    Select city
+                                </option>
+
+                            </select>
+
+                            <span asp-validation-for="CityId"
+                                  class="text-danger">
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <hr class="my-5" />
+
+
+                    <!-- SCHEDULE -->
+
+                    <h2 class="h4 mb-3">
+                        Schedule
+                    </h2>
+
+
+                    <div class="alert alert-info mb-4">
+
+                        <div class="fw-semibold mb-2">
+                            Schedule changes
+                        </div>
+
+                        <div class="small">
+
+                            Draft opportunities can have their schedule updated
+                            as long as all existing shifts remain within the new
+                            start and end times.
+
+                            <br />
+                            <br />
+
+                            Published opportunities can also be updated, but the
+                            start and end dates cannot be changed once volunteers
+                            have already applied.
+
+                            <br />
+                            <br />
+
+                            The application deadline must always be before the
+                            opportunity start date.
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="row g-4">
+
+                        <div class="col-md-6">
+
+                            <label asp-for="StartDate"
+                                   class="form-label">
+                            </label>
+
+                            <input asp-for="StartDate"
+                                   class="form-control"
+                                   type="datetime-local" />
+
+                            <div class="form-text">
+                                Existing shifts must remain within the opportunity schedule.
+                            </div>
+
+                            <span asp-validation-for="StartDate"
+                                  class="text-danger">
+                            </span>
+
+                        </div>
+
+
+                        <div class="col-md-6">
+
+                            <label asp-for="EndDate"
+                                   class="form-label">
+                            </label>
+
+                            <input asp-for="EndDate"
+                                   class="form-control"
+                                   type="datetime-local" />
+
+                            <div class="form-text">
+                                The end date must be after the start date.
+                            </div>
+
+                            <span asp-validation-for="EndDate"
+                                  class="text-danger">
+                            </span>
+
+                        </div>
+
+
+                        <div class="col-12">
+
+                            <label asp-for="ApplicationDeadline"
+                                   class="form-label">
+                            </label>
+
+                            <input asp-for="ApplicationDeadline"
+                                   class="form-control"
+                                   type="datetime-local" />
+
+                            <div class="form-text">
+                                Volunteers will not be able to apply after this date.
+                                The deadline must be before the opportunity starts.
+                            </div>
+
+                            <span asp-validation-for="ApplicationDeadline"
+                                  class="text-danger">
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <hr class="my-5" />
+
+
+                    <!-- ADDITIONAL DETAILS -->
+
+                    <h2 class="h4 mb-4">
+                        Additional Details
+                    </h2>
+
+
+                    <div class="mb-4">
+
+                        <label asp-for="ContactInfo"
+                               class="form-label">
+                        </label>
+
+                        <input asp-for="ContactInfo"
+                               class="form-control" />
+
+                        <span asp-validation-for="ContactInfo"
+                              class="text-danger">
+                        </span>
+
+                    </div>
+
+
+                    <div class="mb-4">
+
+                        <label asp-for="MinimumAge"
+                               class="form-label">
+                        </label>
+
+                        <input asp-for="MinimumAge"
+                               class="form-control"
+                               type="number"
+                               min="16"
+                               max="100" />
+
+                        <span asp-validation-for="MinimumAge"
+                              class="text-danger">
+                        </span>
+
+                    </div>
+
+
+                    <div class="mb-4">
+
+                        <label asp-for="Instructions"
+                               class="form-label">
+                        </label>
+
+                        <textarea asp-for="Instructions"
+                                  class="form-control"
+                                  rows="5">
+                        </textarea>
+
+                        <span asp-validation-for="Instructions"
+                              class="text-danger">
+                        </span>
+
+                    </div>
+
+
+                    <!-- BUTTONS -->
+
+                    <div class="d-flex flex-wrap gap-2 mt-4">
+
+                        <button type="submit"
+                                class="btn btn-primary">
+
+                            Save Changes
+
+                        </button>
+
+
+                        <a asp-action="MyActions"
+                           class="btn btn-outline-secondary">
+
+                            Cancel
+
+                        </a>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+@section Scripts
+{
+    <partial name="_ValidationScriptsPartial" />
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+
+            const countrySelect =
+                document.getElementById("countrySelect");
+
+            const citySelect =
+                document.getElementById("citySelect");
+
+
+            countrySelect.addEventListener("change", async function () {
+
+                const countryId =
+                    this.value;
+
+
+                citySelect.innerHTML =
+                    '<option value="">Select city</option>';
+
+
+                if (!countryId) {
+                    return;
+                }
+
+
+                try {
+
+                    const response =
+                        await fetch(
+                            `/Locations/GetCities?countryId=${countryId}`
+                        );
+
+
+                    if (!response.ok) {
+                        return;
+                    }
+
+
+                    const cities =
+                        await response.json();
+
+
+                    cities.forEach(function (city) {
+
+                        const option =
+                            document.createElement("option");
+
+
+                        option.value =
+                            city.id;
+
+                        option.textContent =
+                            city.name;
+
+
+                        citySelect.appendChild(option);
+
+                    });
+
+                }
+                catch (error) {
+
+                    console.error(
+                        "Unable to load cities.",
+                        error
+                    );
+
+                }
+
+            });
+
+        });
+    </script>
+}

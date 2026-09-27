@@ -1,0 +1,836 @@
+﻿@using VolunteerHub.Constants
+@model VolunteerHub.ViewModels.AdminDashboardViewModel
+
+@{
+    ViewData["Title"] = "Admin Dashboard";
+}
+
+<!-- HEADER -->
+
+<div class="row align-items-center g-4 mb-5">
+
+    <div class="col-lg-8">
+
+        <div class="section-eyebrow">
+            Platform Administration
+        </div>
+
+        <h1 class="mb-2">
+            Admin Dashboard
+        </h1>
+
+        <p class="text-muted mb-0">
+            Monitor users, opportunities, applications
+            and platform activity from one place.
+        </p>
+
+    </div>
+
+
+    <div class="col-lg-4 text-lg-end">
+
+        <a asp-controller="VolunteerActions"
+           asp-action="Index"
+           class="btn btn-outline-primary">
+
+            View Public Platform
+
+        </a>
+
+    </div>
+
+</div>
+
+
+<!-- USERS -->
+
+<div class="mb-3">
+
+    <div class="section-eyebrow">
+        Community
+    </div>
+
+    <h2 class="h3 mb-0">
+        User Overview
+    </h2>
+
+</div>
+
+
+<div class="row g-4 mb-5">
+
+    <div class="col-xl-3 col-md-6">
+
+        <div class="card h-100">
+
+            <div class="card-body p-4">
+
+                <div class="d-flex justify-content-between align-items-center">
+
+                    <div>
+
+                        <div class="text-muted small mb-2">
+                            Total Users
+                        </div>
+
+                        <div class="display-6 fw-bold">
+                            @Model.TotalUsers
+                        </div>
+
+                    </div>
+
+                    <div class="category-icon mb-0">
+                        👥
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="col-xl-3 col-md-6">
+
+        <div class="card h-100">
+
+            <div class="card-body p-4">
+
+                <div class="d-flex justify-content-between align-items-center">
+
+                    <div>
+
+                        <div class="text-muted small mb-2">
+                            Volunteers
+                        </div>
+
+                        <div class="display-6 fw-bold">
+                            @Model.Volunteers
+                        </div>
+
+                    </div>
+
+                    <div class="category-icon mb-0">
+                        🌱
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="col-xl-3 col-md-6">
+
+        <div class="card h-100">
+
+            <div class="card-body p-4">
+
+                <div class="d-flex justify-content-between align-items-center">
+
+                    <div>
+
+                        <div class="text-muted small mb-2">
+                            Organizers
+                        </div>
+
+                        <div class="display-6 fw-bold">
+                            @Model.Organizers
+                        </div>
+
+                    </div>
+
+                    <div class="category-icon mb-0">
+                        🤝
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="col-xl-3 col-md-6">
+
+        <div class="card h-100">
+
+            <div class="card-body p-4">
+
+                <div class="d-flex justify-content-between align-items-center">
+
+                    <div>
+
+                        <div class="text-muted small mb-2">
+                            Admins
+                        </div>
+
+                        <div class="display-6 fw-bold">
+                            @Model.Admins
+                        </div>
+
+                    </div>
+
+                    <div class="category-icon mb-0">
+                        🛡️
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- PLATFORM ACTIVITY -->
+
+<div class="mb-3">
+
+    <div class="section-eyebrow">
+        Platform Activity
+    </div>
+
+    <h2 class="h3 mb-0">
+        Opportunities & Applications
+    </h2>
+
+</div>
+
+
+<div class="row g-4 mb-5">
+
+    <div class="col-xl-3 col-md-6">
+
+        <div class="card h-100">
+
+            <div class="card-body p-4">
+
+                <div class="text-muted small mb-2">
+                    Total Opportunities
+                </div>
+
+                <div class="display-6 fw-bold">
+                    @Model.TotalActions
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="col-xl-3 col-md-6">
+
+        <div class="card h-100">
+
+            <div class="card-body p-4">
+
+                <div class="text-muted small mb-2">
+                    Published
+                </div>
+
+                <div class="display-6 fw-bold">
+                    @Model.PublishedActions
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="col-xl-3 col-md-6">
+
+        <div class="card h-100">
+
+            <div class="card-body p-4">
+
+                <div class="text-muted small mb-2">
+                    Total Applications
+                </div>
+
+                <div class="display-6 fw-bold">
+                    @Model.TotalApplications
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="col-xl-3 col-md-6">
+
+        <div class="card h-100">
+
+            <div class="card-body p-4">
+
+                <div class="text-muted small mb-2">
+                    Pending Applications
+                </div>
+
+                <div class="display-6 fw-bold">
+                    @Model.PendingApplications
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- PLATFORM SUMMARY -->
+
+<div class="row g-4 mb-5">
+
+    <div class="col-lg-7">
+
+        <div class="impact-section h-100">
+
+            <div class="row align-items-center g-4">
+
+                <div class="col-md-8">
+
+                    <div class="mb-2"
+                         style="
+                            color: rgba(255,255,255,.75);
+                            font-weight:700;
+                            text-transform:uppercase;
+                            letter-spacing:.08em;
+                            font-size:.78rem;
+                         ">
+
+                        Platform Overview
+
+                    </div>
+
+                    <h2 class="text-white mb-3">
+                        VolunteerHub at a glance.
+                    </h2>
+
+
+                    <div class="row g-4">
+
+                        <div class="col-6">
+
+                            <div class="impact-number">
+                                @Model.TotalShifts
+                            </div>
+
+                            <div class="impact-label">
+                                Volunteer Shifts
+                            </div>
+
+                        </div>
+
+
+                        <div class="col-6">
+
+                            <div class="impact-number">
+                                @Model.ApprovedApplications
+                            </div>
+
+                            <div class="impact-label">
+                                Approved Applications
+                            </div>
+
+                        </div>
+
+
+                        <div class="col-6">
+
+                            <div class="impact-number">
+                                @Model.Countries
+                            </div>
+
+                            <div class="impact-label">
+                                Countries
+                            </div>
+
+                        </div>
+
+
+                        <div class="col-6">
+
+                            <div class="impact-number">
+                                @Model.Cities
+                            </div>
+
+                            <div class="impact-label">
+                                Cities
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="col-md-4 text-md-center">
+
+                    <div style="
+                            font-size:4.5rem;
+                            line-height:1;
+                         ">
+                        🌍
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ADMIN QUICK ACTIONS -->
+
+    <div class="col-lg-5">
+
+        <div class="card h-100">
+
+            <div class="card-body p-4">
+
+                <h2 class="h5 mb-1">
+                    Administration
+                </h2>
+
+                <p class="text-muted mb-4">
+                    Manage the core areas of VolunteerHub.
+                </p>
+
+
+                <div class="d-grid gap-2">
+
+                    <a asp-controller="Admin"
+                       asp-action="Users"
+                       class="btn btn-primary">
+
+                        Manage Users
+
+                    </a>
+
+
+                    <a asp-controller="Admin"
+                       asp-action="Actions"
+                       class="btn btn-outline-primary">
+
+                        Manage Opportunities
+
+                    </a>
+
+
+                    <a asp-controller="VolunteerActions"
+                       asp-action="Index"
+                       class="btn btn-outline-secondary">
+
+                        View Public Opportunities
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- EXTRA STATS -->
+
+<div class="eco-panel mb-5">
+
+    <div class="row g-4">
+
+        <div class="col-md-4">
+
+            <div class="text-muted small mb-2">
+                Draft Opportunities
+            </div>
+
+            <div class="h2 mb-0">
+                @Model.DraftActions
+            </div>
+
+        </div>
+
+
+        <div class="col-md-4">
+
+            <div class="text-muted small mb-2">
+                Completed Opportunities
+            </div>
+
+            <div class="h2 mb-0">
+                @Model.CompletedActions
+            </div>
+
+        </div>
+
+
+        <div class="col-md-4">
+
+            <div class="text-muted small mb-2">
+                Approved Applications
+            </div>
+
+            <div class="h2 mb-0">
+                @Model.ApprovedApplications
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- RECENT USERS -->
+
+<div class="d-flex flex-wrap justify-content-between align-items-end gap-3 mb-3">
+
+    <div>
+
+        <div class="section-eyebrow">
+            Community
+        </div>
+
+        <h2 class="h3 mb-0">
+            Recent Users
+        </h2>
+
+    </div>
+
+
+    <a asp-controller="Admin"
+       asp-action="Users"
+       class="btn btn-outline-primary">
+
+        Manage Users
+
+    </a>
+
+</div>
+
+
+@if (Model.RecentUsers.Any())
+{
+    <div class="card mb-5">
+
+        <div class="table-responsive">
+
+            <table class="table mb-0">
+
+                <thead>
+
+                    <tr>
+
+                        <th class="ps-4">
+                            User
+                        </th>
+
+                        <th>
+                            Location
+                        </th>
+
+                        <th>
+                            Joined
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                    @foreach (var user in Model.RecentUsers)
+                    {
+                        <tr>
+
+                            <td class="ps-4">
+
+                                <div class="fw-semibold">
+                                    @user.FullName
+                                </div>
+
+                                <div class="text-muted small">
+                                    @user.Email
+                                </div>
+
+                            </td>
+
+
+                            <td>
+
+                                @if (user.City != null &&
+                                     user.City.Country != null)
+                                {
+                                    <span>
+                                        @user.City.Name,
+                                        @user.City.Country.Name
+                                    </span>
+                                }
+                                else
+                                {
+                                    <span class="text-muted">
+                                        Not specified
+                                    </span>
+                                }
+
+                            </td>
+
+
+                            <td>
+                                @user.RegistrationDate.ToString("dd MMM yyyy")
+                            </td>
+
+                        </tr>
+                    }
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+}
+else
+{
+    <div class="eco-panel text-center py-5 mb-5">
+
+        <h3 class="h5">
+            No users available
+        </h3>
+
+    </div>
+}
+
+
+<!-- RECENT OPPORTUNITIES -->
+
+<div class="d-flex flex-wrap justify-content-between align-items-end gap-3 mb-3">
+
+    <div>
+
+        <div class="section-eyebrow">
+            Opportunities
+        </div>
+
+        <h2 class="h3 mb-0">
+            Recent Opportunities
+        </h2>
+
+    </div>
+
+
+    <a asp-controller="Admin"
+       asp-action="Actions"
+       class="btn btn-outline-primary">
+
+        Manage All
+
+    </a>
+
+</div>
+
+
+@if (Model.RecentActions.Any())
+{
+    <div class="card">
+
+        <div class="table-responsive">
+
+            <table class="table mb-0">
+
+                <thead>
+
+                    <tr>
+
+                        <th class="ps-4">
+                            Opportunity
+                        </th>
+
+                        <th>
+                            Organizer
+                        </th>
+
+                        <th>
+                            Location
+                        </th>
+
+                        <th>
+                            Status
+                        </th>
+
+                        <th class="text-end pe-4">
+                            View
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                    @foreach (var action in Model.RecentActions)
+                    {
+                        <tr>
+
+                            <td class="ps-4">
+
+                                <div class="fw-semibold">
+                                    @action.Title
+                                </div>
+
+                                <div class="text-muted small">
+                                    @action.Category
+                                </div>
+
+                            </td>
+
+
+                            <td>
+                                @action.Organizer.FullName
+                            </td>
+
+
+                            <td>
+
+                                @if (action.City != null &&
+                                     action.City.Country != null)
+                                {
+                                    <span>
+                                        @action.City.Name,
+                                        @action.City.Country.Name
+                                    </span>
+                                }
+                                else
+                                {
+                                    <span class="text-muted">
+                                        Not specified
+                                    </span>
+                                }
+
+                            </td>
+
+
+                            <td>
+
+                                @switch (action.Status)
+                                {
+                                    case VolunteerActionStatuses.Published:
+
+                                        <span class="badge bg-primary">
+                                            Published
+                                        </span>
+
+                                        break;
+
+
+                                    case VolunteerActionStatuses.InProgress:
+
+                                        <span class="badge bg-success">
+                                            In Progress
+                                        </span>
+
+                                        break;
+
+
+                                    case VolunteerActionStatuses.Completed:
+
+                                        <span class="badge bg-dark">
+                                            Completed
+                                        </span>
+
+                                        break;
+
+
+                                    case VolunteerActionStatuses.Cancelled:
+
+                                        <span class="badge bg-danger">
+                                            Cancelled
+                                        </span>
+
+                                        break;
+
+
+                                    case VolunteerActionStatuses.Draft:
+
+                                        <span class="badge bg-secondary">
+                                            Draft
+                                        </span>
+
+                                        break;
+
+
+                                    default:
+
+                                        <span class="badge bg-secondary">
+                                            @action.Status
+                                        </span>
+
+                                        break;
+                                }
+
+                            </td>
+
+
+                            <td class="text-end pe-4">
+
+                                <a asp-controller="VolunteerActions"
+                                   asp-action="Details"
+                                   asp-route-id="@action.Id"
+                                   class="btn btn-sm btn-outline-primary">
+
+                                    View
+
+                                </a>
+
+                            </td>
+
+                        </tr>
+                    }
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+}
+else
+{
+    <div class="eco-panel text-center py-5">
+
+        <h3 class="h5">
+            No opportunities available
+        </h3>
+
+    </div>
+}

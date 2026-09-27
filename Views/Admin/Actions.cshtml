@@ -1,0 +1,520 @@
+﻿@using VolunteerHub.Constants
+@model IEnumerable<VolunteerHub.Models.VolunteerAction>
+
+@{
+    ViewData["Title"] = "Manage Opportunities";
+
+    var totalCount =
+        Model.Count();
+
+    var publishedCount =
+        Model.Count(a =>
+            a.Status == VolunteerActionStatuses.Published);
+
+    var draftCount =
+        Model.Count(a =>
+            a.Status == VolunteerActionStatuses.Draft);
+
+    var completedCount =
+        Model.Count(a =>
+            a.Status == VolunteerActionStatuses.Completed);
+}
+
+<!-- HEADER -->
+
+<div class="row align-items-center g-4 mb-5">
+
+    <div class="col-lg-8">
+
+        <div class="section-eyebrow">
+            Platform Administration
+        </div>
+
+        <h1 class="mb-2">
+            Manage Opportunities
+        </h1>
+
+        <p class="text-muted mb-0">
+            Review and manage volunteer opportunities
+            created by organizers across VolunteerHub.
+        </p>
+
+    </div>
+
+
+    <div class="col-lg-4 text-lg-end">
+
+        <a asp-controller="Admin"
+           asp-action="Index"
+           class="btn btn-outline-secondary">
+
+            Back to Dashboard
+
+        </a>
+
+    </div>
+
+</div>
+
+
+<!-- MESSAGES -->
+
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success mb-4">
+        @TempData["Success"]
+    </div>
+}
+
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger mb-4">
+        @TempData["Error"]
+    </div>
+}
+
+
+<!-- SUMMARY CARDS -->
+
+<div class="row g-4 mb-5">
+
+    <!-- TOTAL -->
+
+    <div class="col-xl-3 col-md-6">
+
+        <div class="card h-100">
+
+            <div class="card-body p-4">
+
+                <div class="d-flex justify-content-between align-items-center">
+
+                    <div>
+
+                        <div class="text-muted small mb-2">
+                            Total Opportunities
+                        </div>
+
+                        <div class="display-6 fw-bold">
+                            @totalCount
+                        </div>
+
+                    </div>
+
+                    <div class="category-icon mb-0">
+                        🌍
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- PUBLISHED -->
+
+    <div class="col-xl-3 col-md-6">
+
+        <div class="card h-100">
+
+            <div class="card-body p-4">
+
+                <div class="d-flex justify-content-between align-items-center">
+
+                    <div>
+
+                        <div class="text-muted small mb-2">
+                            Published
+                        </div>
+
+                        <div class="display-6 fw-bold">
+                            @publishedCount
+                        </div>
+
+                    </div>
+
+                    <div class="category-icon mb-0">
+                        📢
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- DRAFT -->
+
+    <div class="col-xl-3 col-md-6">
+
+        <div class="card h-100">
+
+            <div class="card-body p-4">
+
+                <div class="d-flex justify-content-between align-items-center">
+
+                    <div>
+
+                        <div class="text-muted small mb-2">
+                            Draft
+                        </div>
+
+                        <div class="display-6 fw-bold">
+                            @draftCount
+                        </div>
+
+                    </div>
+
+                    <div class="category-icon mb-0">
+                        📝
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- COMPLETED -->
+
+    <div class="col-xl-3 col-md-6">
+
+        <div class="card h-100">
+
+            <div class="card-body p-4">
+
+                <div class="d-flex justify-content-between align-items-center">
+
+                    <div>
+
+                        <div class="text-muted small mb-2">
+                            Completed
+                        </div>
+
+                        <div class="display-6 fw-bold">
+                            @completedCount
+                        </div>
+
+                    </div>
+
+                    <div class="category-icon mb-0">
+                        ✅
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- OPPORTUNITIES -->
+
+<div class="eco-panel mb-4">
+
+    <div class="d-flex flex-wrap justify-content-between align-items-center gap-3">
+
+        <div>
+
+            <h2 class="h5 mb-1">
+                All Opportunities
+            </h2>
+
+            <p class="text-muted mb-0">
+                Opportunities created by all organizers on the platform.
+            </p>
+
+        </div>
+
+
+        <span class="badge bg-light text-dark border">
+
+            @totalCount
+            @(totalCount == 1 ? "opportunity" : "opportunities")
+
+        </span>
+
+    </div>
+
+</div>
+
+
+@if (Model.Any())
+{
+    <div class="card">
+
+        <div class="table-responsive">
+
+            <table class="table mb-0">
+
+                <thead>
+
+                    <tr>
+
+                        <th class="ps-4">
+                            Opportunity
+                        </th>
+
+                        <th>
+                            Organizer
+                        </th>
+
+                        <th>
+                            Location
+                        </th>
+
+                        <th>
+                            Schedule
+                        </th>
+
+                        <th>
+                            Shifts
+                        </th>
+
+                        <th>
+                            Status
+                        </th>
+
+                        <th class="text-end pe-4">
+                            Actions
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                    @foreach (var action in Model)
+                    {
+                        <tr>
+
+                            <!-- OPPORTUNITY -->
+
+                            <td class="ps-4">
+
+                                <div class="fw-semibold">
+                                    @action.Title
+                                </div>
+
+                                <div class="text-muted small">
+                                    @action.Category
+                                </div>
+
+                            </td>
+
+
+                            <!-- ORGANIZER -->
+
+                            <td>
+
+                                <div class="fw-semibold">
+                                    @action.Organizer.FullName
+                                </div>
+
+                                <div class="text-muted small">
+                                    @action.Organizer.Email
+                                </div>
+
+                            </td>
+
+
+                            <!-- LOCATION -->
+
+                            <td>
+
+                                @if (action.City != null &&
+                                     action.City.Country != null)
+                                {
+                                    <span>
+                                        @action.City.Name,
+                                        @action.City.Country.Name
+                                    </span>
+                                }
+                                else
+                                {
+                                    <span class="text-muted">
+                                        Not specified
+                                    </span>
+                                }
+
+                            </td>
+
+
+                            <!-- DATE -->
+
+                            <td>
+
+                                <div>
+                                    @action.StartDate.ToString("dd MMM yyyy")
+                                </div>
+
+                                <div class="text-muted small">
+                                    @action.StartDate.ToString("HH:mm")
+                                    -
+                                    @action.EndDate.ToString("HH:mm")
+                                </div>
+
+                            </td>
+
+
+                            <!-- SHIFTS -->
+
+                            <td>
+
+                                <span class="badge bg-light text-dark border">
+                                    @action.Shifts.Count
+                                </span>
+
+                            </td>
+
+
+                            <!-- STATUS -->
+
+                            <td>
+
+                                @switch (action.Status)
+                                {
+                                    case VolunteerActionStatuses.Draft:
+
+                                        <span class="badge bg-secondary">
+                                            Draft
+                                        </span>
+
+                                        break;
+
+
+                                    case VolunteerActionStatuses.Published:
+
+                                        <span class="badge bg-primary">
+                                            Published
+                                        </span>
+
+                                        break;
+
+
+                                    case VolunteerActionStatuses.InProgress:
+
+                                        <span class="badge bg-success">
+                                            In Progress
+                                        </span>
+
+                                        break;
+
+
+                                    case VolunteerActionStatuses.Completed:
+
+                                        <span class="badge bg-dark">
+                                            Completed
+                                        </span>
+
+                                        break;
+
+
+                                    case VolunteerActionStatuses.Cancelled:
+
+                                        <span class="badge bg-danger">
+                                            Cancelled
+                                        </span>
+
+                                        break;
+
+
+                                    default:
+
+                                        <span class="badge bg-secondary">
+                                            @action.Status
+                                        </span>
+
+                                        break;
+                                }
+
+                            </td>
+
+
+                            <!-- ACTION BUTTONS -->
+
+                            <td class="text-end pe-4">
+
+                                <div class="d-flex justify-content-end flex-wrap gap-2">
+
+                                    @if (action.Status ==
+                                            VolunteerActionStatuses.Published ||
+
+                                         action.Status ==
+                                            VolunteerActionStatuses.InProgress)
+                                    {
+                                        <a asp-controller="VolunteerActions"
+                                           asp-action="Details"
+                                           asp-route-id="@action.Id"
+                                           class="btn btn-sm btn-outline-primary">
+
+                                            View
+
+                                        </a>
+                                    }
+
+
+                                    <form asp-controller="Admin"
+                                          asp-action="DeleteAction"
+                                          asp-route-id="@action.Id"
+                                          method="post"
+                                          class="d-inline"
+                                          onsubmit="return confirm('Are you sure you want to permanently delete this opportunity? This will also remove its shifts and related applications.');">
+
+                                        <button type="submit"
+                                                class="btn btn-sm btn-outline-danger">
+
+                                            Delete
+
+                                        </button>
+
+                                    </form>
+
+                                </div>
+
+                            </td>
+
+                        </tr>
+                    }
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+}
+else
+{
+    <div class="eco-panel text-center py-5">
+
+        <div class="mb-3"
+             style="font-size: 3rem;">
+            🌱
+        </div>
+
+        <h2 class="h5">
+            No opportunities found
+        </h2>
+
+        <p class="text-muted mb-0">
+            There are currently no volunteer opportunities on the platform.
+        </p>
+
+    </div>
+}

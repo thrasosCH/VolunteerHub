@@ -1,0 +1,530 @@
+﻿@using VolunteerHub.Constants
+@model VolunteerHub.ViewModels.VolunteerActionIndexViewModel
+
+@{
+    ViewData["Title"] = "Volunteer Opportunities";
+}
+
+
+<!-- PAGE HEADER -->
+
+<div class="mb-4">
+
+    <div class="section-eyebrow">
+        Make a difference
+    </div>
+
+    <h1 class="mb-2">
+        Volunteer Opportunities
+    </h1>
+
+    <p class="text-muted mb-0">
+        Discover meaningful opportunities and find a cause that matches
+        your interests, location and schedule.
+    </p>
+
+</div>
+
+
+<!-- FILTERS -->
+
+<div class="eco-panel mb-5">
+
+    <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-4">
+
+        <div>
+
+            <h2 class="h5 mb-1">
+                Find the right opportunity
+            </h2>
+
+            <p class="text-muted mb-0">
+                Use the filters below to narrow your search.
+            </p>
+
+        </div>
+
+
+        <span class="badge bg-light text-dark border">
+
+            @Model.Actions.Count
+            @(Model.Actions.Count == 1
+                ? "opportunity"
+                : "opportunities")
+
+        </span>
+
+    </div>
+
+
+    <form asp-action="Index"
+          method="get">
+
+        <div class="row g-3">
+
+
+            <!-- SEARCH -->
+
+            <div class="col-lg-4 col-md-6">
+
+                <label asp-for="SearchString"
+                       class="form-label">
+                    Search
+                </label>
+
+                <input asp-for="SearchString"
+                       class="form-control"
+                       placeholder="Title or description..." />
+
+            </div>
+
+
+            <!-- CATEGORY -->
+
+            <div class="col-lg-4 col-md-6">
+
+                <label asp-for="Category"
+                       class="form-label">
+                    Category
+                </label>
+
+                <select asp-for="Category"
+                        asp-items="Model.Categories"
+                        class="form-select">
+
+                    <option value="">
+                        All categories
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <!-- COUNTRY -->
+
+            <div class="col-lg-4 col-md-6">
+
+                <label asp-for="CountryId"
+                       class="form-label">
+                    Country
+                </label>
+
+                <select asp-for="CountryId"
+                        asp-items="Model.Countries"
+                        id="countrySelect"
+                        class="form-select">
+
+                    <option value="">
+                        All countries
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <!-- CITY -->
+
+            <div class="col-lg-4 col-md-6">
+
+                <label asp-for="CityId"
+                       class="form-label">
+                    City
+                </label>
+
+                <select asp-for="CityId"
+                        asp-items="Model.Cities"
+                        id="citySelect"
+                        class="form-select"
+                        disabled="@(!Model.CountryId.HasValue)">
+
+                    <option value="">
+                        All cities
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <!-- DATE -->
+
+            <div class="col-lg-4 col-md-6">
+
+                <label asp-for="Date"
+                       class="form-label">
+                    Date
+                </label>
+
+                <input asp-for="Date"
+                       asp-format="{0:yyyy-MM-dd}"
+                       type="date"
+                       class="form-control" />
+
+            </div>
+
+
+            <!-- BUTTONS -->
+
+            <div class="col-lg-4 col-md-6 d-flex align-items-end">
+
+                <div class="d-flex gap-2 w-100">
+
+                    <button type="submit"
+                            class="btn btn-primary flex-grow-1">
+
+                        Search
+
+                    </button>
+
+
+                    <a asp-action="Index"
+                       class="btn btn-outline-secondary">
+
+                        Clear
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </form>
+
+</div>
+
+
+<!-- RESULTS -->
+
+@if (Model.Actions.Any())
+{
+    <div class="row g-4">
+
+        @foreach (var action in Model.Actions)
+        {
+            <div class="col-xl-4 col-md-6">
+
+                <div class="card shadow-sm h-100">
+
+                    <!-- CATEGORY VISUAL -->
+
+                    <div class="d-flex align-items-center justify-content-center"
+                         style="
+                        height: 180px;
+                        background: linear-gradient(
+                        135deg,
+                        #eef9f2,
+                        #dff4e8
+                        );
+                        font-size: 3.5rem;
+                        ">
+
+                        @switch (action.Category)
+                        {
+                            case VolunteerActionCategories.Environment:
+
+                                <span>🌿</span>
+
+                                break;
+
+
+                            case VolunteerActionCategories.Animals:
+
+                                <span>🐾</span>
+
+                                break;
+
+
+                            case VolunteerActionCategories.Social:
+
+                                <span>🤝</span>
+
+                                break;
+
+
+                            case VolunteerActionCategories.Education:
+
+                                <span>📚</span>
+
+                                break;
+
+
+                            case VolunteerActionCategories.Health:
+
+                                <span>💚</span>
+
+                                break;
+
+
+                            default:
+
+                                <span>✨</span>
+
+                                break;
+                        }
+
+                    </div>
+
+
+                    <div class="card-body p-4 d-flex flex-column">
+
+
+                        <!-- BADGES -->
+
+                        <div class="d-flex justify-content-between align-items-start gap-2 mb-3">
+
+                            <span class="badge bg-light text-dark border">
+                                @action.Category
+                            </span>
+
+
+                            @if (action.Status ==
+                                VolunteerActionStatuses.InProgress)
+                            {
+                                <span class="badge bg-success">
+                                    In Progress
+                                </span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-primary">
+                                    Open
+                                </span>
+                            }
+
+                        </div>
+
+
+                        <!-- TITLE -->
+
+                        <h2 class="h5 mb-2">
+                            @action.Title
+                        </h2>
+
+
+                        <!-- DESCRIPTION -->
+
+                        <p class="text-muted mb-4">
+
+                            @{
+                                var description =
+                                    action.Description ?? string.Empty;
+
+                                var shortDescription =
+                                    description.Length > 130
+                                        ? description.Substring(0, 130) + "..."
+                                        : description;
+                            }
+
+                            @shortDescription
+
+                        </p>
+
+
+                        <!-- LOCATION -->
+
+                        <div class="small mb-2">
+
+                            <span class="me-2">
+                                📍
+                            </span>
+
+
+                            @if (action.City != null &&
+                                 action.City.Country != null)
+                            {
+                                <span class="fw-semibold">
+
+                                    @action.City.Name,
+                                    @action.City.Country.Name
+
+                                </span>
+                            }
+                            else
+                            {
+                                <span class="text-muted">
+                                    Location not specified
+                                </span>
+                            }
+
+                        </div>
+
+
+                        <!-- DATE -->
+
+                        <div class="small mb-2">
+
+                            <span class="me-2">
+                                📅
+                            </span>
+
+                            <span class="fw-semibold">
+                                @action.StartDate.ToString("dd MMM yyyy")
+                            </span>
+
+                        </div>
+
+
+                        <!-- TIME -->
+
+                        <div class="small mb-4">
+
+                            <span class="me-2">
+                                🕒
+                            </span>
+
+                            <span>
+
+                                @action.StartDate.ToString("HH:mm")
+                                -
+                                @action.EndDate.ToString("HH:mm")
+
+                            </span>
+
+                        </div>
+
+
+                        <!-- BUTTON -->
+
+                        <div class="mt-auto">
+
+                            <a asp-action="Details"
+                               asp-route-id="@action.Id"
+                               class="btn btn-outline-primary w-100">
+
+                                View Opportunity
+
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+        }
+
+    </div>
+}
+else
+{
+    <div class="eco-panel text-center py-5">
+
+        <div style="font-size: 3rem;"
+             class="mb-3">
+            🌱
+        </div>
+
+        <h2 class="h4">
+            No opportunities found
+        </h2>
+
+        <p class="text-muted mb-4">
+            We couldn't find anything matching your current filters.
+            Try changing your search or explore all opportunities.
+        </p>
+
+        <a asp-action="Index"
+           class="btn btn-primary">
+
+            View All Opportunities
+
+        </a>
+
+    </div>
+}
+
+
+@section Scripts
+{
+    <script>
+
+        const countrySelect =
+            document.getElementById("countrySelect");
+
+        const citySelect =
+            document.getElementById("citySelect");
+
+
+        countrySelect.addEventListener(
+            "change",
+            async function () {
+
+                const countryId =
+                    this.value;
+
+
+                citySelect.innerHTML =
+                    '<option value="">All cities</option>';
+
+
+                if (!countryId) {
+
+                    citySelect.disabled =
+                        true;
+
+                    return;
+                }
+
+
+                citySelect.disabled =
+                    true;
+
+
+                try {
+
+                    const response =
+                        await fetch(
+                            `/Locations/GetCities?countryId=${countryId}`
+                        );
+
+
+                    if (!response.ok) {
+
+                        throw new Error(
+                            "Unable to load cities."
+                        );
+                    }
+
+
+                    const cities =
+                        await response.json();
+
+
+                    cities.forEach(city => {
+
+                        const option =
+                            document.createElement("option");
+
+                        option.value =
+                            city.id;
+
+                        option.textContent =
+                            city.name;
+
+                        citySelect.appendChild(
+                            option);
+                    });
+
+
+                    citySelect.disabled =
+                        false;
+
+                }
+                catch (error) {
+
+                    console.error(
+                        error);
+
+                    citySelect.innerHTML =
+                        '<option value="">Unable to load cities</option>';
+                }
+
+            });
+
+    </script>
+}

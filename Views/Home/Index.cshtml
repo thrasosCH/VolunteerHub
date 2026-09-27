@@ -1,0 +1,550 @@
+﻿@using VolunteerHub.Constants
+
+@{
+    ViewData["Title"] = "Home";
+}
+
+<!-- HERO -->
+
+<section class="volunteer-hero">
+
+    <div class="row align-items-center g-5">
+
+        <div class="col-lg-7 hero-content">
+
+            <div class="hero-eyebrow">
+                🌱 Community powered volunteering
+            </div>
+
+            <h1 class="hero-title">
+                Small actions.
+                <span class="hero-title-highlight">
+                    Real impact.
+                </span>
+            </h1>
+
+            <p class="hero-description">
+                Discover meaningful volunteer opportunities,
+                connect with local organizations and become
+                part of a community creating positive change.
+            </p>
+
+
+            <div class="hero-actions">
+
+                <a asp-controller="VolunteerActions"
+                   asp-action="Index"
+                   class="btn btn-primary btn-lg">
+
+                    Explore Opportunities
+
+                </a>
+
+
+                @if (User.Identity?.IsAuthenticated == true &&
+                     User.IsInRole(UserRoles.Organizer))
+                {
+                    <a asp-controller="VolunteerActions"
+                       asp-action="Create"
+                       class="btn btn-outline-primary btn-lg">
+
+                        Create an Opportunity
+
+                    </a>
+                }
+                else if (User.Identity?.IsAuthenticated != true)
+                {
+                    <a asp-area="Identity"
+                       asp-page="/Account/Register"
+                       class="btn btn-outline-primary btn-lg">
+
+                        Join VolunteerHub
+
+                    </a>
+                }
+
+            </div>
+
+        </div>
+
+
+        <div class="col-lg-5">
+
+            <div class="hero-impact-card">
+
+                <div class="hero-eyebrow">
+                    Make a difference
+                </div>
+
+                <h3>
+                    Volunteering made simple
+                </h3>
+
+                <ul class="impact-list">
+
+                    <li>
+                        <span class="impact-check">✓</span>
+
+                        <span>
+                            Find opportunities near you
+                        </span>
+                    </li>
+
+                    <li>
+                        <span class="impact-check">✓</span>
+
+                        <span>
+                            Choose shifts that fit your schedule
+                        </span>
+                    </li>
+
+                    <li>
+                        <span class="impact-check">✓</span>
+
+                        <span>
+                            Track your applications in one place
+                        </span>
+                    </li>
+
+                    <li>
+                        <span class="impact-check">✓</span>
+
+                        <span>
+                            Connect with community organizers
+                        </span>
+                    </li>
+
+                </ul>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- CATEGORIES -->
+
+<section class="home-section">
+
+    <div class="section-heading">
+
+        <div class="section-eyebrow">
+            Find your cause
+        </div>
+
+        <h2 class="section-title">
+            Volunteer for something you care about
+        </h2>
+
+        <p class="section-description">
+            Explore opportunities across different causes
+            and discover where your time and skills can make
+            the biggest difference.
+        </p>
+
+    </div>
+
+
+    <div class="row g-4">
+
+        <!-- ENVIRONMENT -->
+
+        <div class="col-lg-4 col-md-6">
+
+            <a asp-controller="VolunteerActions"
+               asp-action="Index"
+               asp-route-category="@VolunteerActionCategories.Environment"
+               class="text-decoration-none text-reset">
+
+                <div class="category-card">
+
+                    <div class="category-icon">
+                        🌿
+                    </div>
+
+                    <h3>
+                        Environment
+                    </h3>
+
+                    <p>
+                        Join cleanups, sustainability projects
+                        and initiatives protecting our planet.
+                    </p>
+
+                </div>
+
+            </a>
+
+        </div>
+
+
+        <!-- ANIMALS -->
+
+        <div class="col-lg-4 col-md-6">
+
+            <a asp-controller="VolunteerActions"
+               asp-action="Index"
+               asp-route-category="@VolunteerActionCategories.Animals"
+               class="text-decoration-none text-reset">
+
+                <div class="category-card">
+
+                    <div class="category-icon">
+                        🐾
+                    </div>
+
+                    <h3>
+                        Animal Welfare
+                    </h3>
+
+                    <p>
+                        Support shelters, animal care programs
+                        and organizations helping animals in need.
+                    </p>
+
+                </div>
+
+            </a>
+
+        </div>
+
+
+        <!-- COMMUNITY -->
+
+        <div class="col-lg-4 col-md-6">
+
+            <a asp-controller="VolunteerActions"
+               asp-action="Index"
+               asp-route-category="@VolunteerActionCategories.Social"
+               class="text-decoration-none text-reset">
+
+                <div class="category-card">
+
+                    <div class="category-icon">
+                        🤝
+                    </div>
+
+                    <h3>
+                        Community Support
+                    </h3>
+
+                    <p>
+                        Help local communities through social
+                        initiatives, events and direct support.
+                    </p>
+
+                </div>
+
+            </a>
+
+        </div>
+
+
+        <!-- EDUCATION -->
+
+        <div class="col-lg-4 col-md-6">
+
+            <a asp-controller="VolunteerActions"
+               asp-action="Index"
+               asp-route-category="@VolunteerActionCategories.Education"
+               class="text-decoration-none text-reset">
+
+                <div class="category-card">
+
+                    <div class="category-icon">
+                        📚
+                    </div>
+
+                    <h3>
+                        Education
+                    </h3>
+
+                    <p>
+                        Share knowledge, mentor others and support
+                        educational programs in your community.
+                    </p>
+
+                </div>
+
+            </a>
+
+        </div>
+
+
+        <!-- HEALTH -->
+
+        <div class="col-lg-4 col-md-6">
+
+            <a asp-controller="VolunteerActions"
+               asp-action="Index"
+               asp-route-category="@VolunteerActionCategories.Health"
+               class="text-decoration-none text-reset">
+
+                <div class="category-card">
+
+                    <div class="category-icon">
+                        💚
+                    </div>
+
+                    <h3>
+                        Health & Wellbeing
+                    </h3>
+
+                    <p>
+                        Support health initiatives, wellbeing
+                        programs and people who need a helping hand.
+                    </p>
+
+                </div>
+
+            </a>
+
+        </div>
+
+
+        <!-- OTHER -->
+
+        <div class="col-lg-4 col-md-6">
+
+            <a asp-controller="VolunteerActions"
+               asp-action="Index"
+               asp-route-category="@VolunteerActionCategories.Other"
+               class="text-decoration-none text-reset">
+
+                <div class="category-card">
+
+                    <div class="category-icon">
+                        ✨
+                    </div>
+
+                    <h3>
+                        More Causes
+                    </h3>
+
+                    <p>
+                        Discover unique opportunities and find
+                        another cause that matches your interests.
+                    </p>
+
+                </div>
+
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- IMPACT -->
+
+<section class="home-section">
+
+    <div class="impact-section">
+
+        <div class="row g-3">
+
+            <div class="col-6 col-lg-3">
+
+                <div class="impact-stat">
+
+                    <span class="impact-number">
+                        10
+                    </span>
+
+                    <span class="impact-label">
+                        Countries
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="col-6 col-lg-3">
+
+                <div class="impact-stat">
+
+                    <span class="impact-number">
+                        60+
+                    </span>
+
+                    <span class="impact-label">
+                        Cities
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="col-6 col-lg-3">
+
+                <div class="impact-stat">
+
+                    <span class="impact-number">
+                        Flexible
+                    </span>
+
+                    <span class="impact-label">
+                        Volunteer Shifts
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="col-6 col-lg-3">
+
+                <div class="impact-stat">
+
+                    <span class="impact-number">
+                        Together
+                    </span>
+
+                    <span class="impact-label">
+                        Community Driven
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- HOW IT WORKS -->
+
+<section class="home-section">
+
+    <div class="section-heading text-center">
+
+        <div class="section-eyebrow">
+            Simple by design
+        </div>
+
+        <h2 class="section-title">
+            How VolunteerHub works
+        </h2>
+
+        <p class="section-description mx-auto">
+            From discovering an opportunity to joining a shift,
+            everything happens in a few simple steps.
+        </p>
+
+    </div>
+
+
+    <div class="row g-4">
+
+        <div class="col-md-4">
+
+            <div class="category-card text-center">
+
+                <div class="category-icon mx-auto">
+                    🔎
+                </div>
+
+                <h3>
+                    1. Discover
+                </h3>
+
+                <p>
+                    Search opportunities by category,
+                    country, city and date.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="col-md-4">
+
+            <div class="category-card text-center">
+
+                <div class="category-icon mx-auto">
+                    🙋
+                </div>
+
+                <h3>
+                    2. Apply
+                </h3>
+
+                <p>
+                    Choose a shift that suits you
+                    and submit your application.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="col-md-4">
+
+            <div class="category-card text-center">
+
+                <div class="category-icon mx-auto">
+                    🌍
+                </div>
+
+                <h3>
+                    3. Make an Impact
+                </h3>
+
+                <p>
+                    Join the community, contribute your time
+                    and create positive change.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- FINAL CTA -->
+
+<section class="home-section">
+
+    <div class="community-cta">
+
+        <div class="section-eyebrow">
+            Your time matters
+        </div>
+
+        <h2>
+            Ready to make a difference?
+        </h2>
+
+        <p>
+            Explore volunteering opportunities and find
+            a cause that inspires you. Every contribution,
+            big or small, can create meaningful change.
+        </p>
+
+
+        <a asp-controller="VolunteerActions"
+           asp-action="Index"
+           class="btn btn-primary btn-lg">
+
+            Explore Opportunities
+
+        </a>
+
+    </div>
+
+</section>

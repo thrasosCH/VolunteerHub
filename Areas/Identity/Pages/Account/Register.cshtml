@@ -1,0 +1,288 @@
+﻿@page
+@model VolunteerHub.Areas.Identity.Pages.Account.RegisterModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@using VolunteerHub.Constants
+
+@{
+    ViewData["Title"] = "Create Account";
+}
+
+<div class="row justify-content-center">
+    <div class="col-lg-7 col-xl-6">
+
+        <div class="card shadow-sm">
+            <div class="card-body p-4 p-md-5">
+
+                <div class="mb-4">
+                    <h1 class="h2">Create your account</h1>
+
+                    <p class="text-muted mb-0">
+                        Join VolunteerHub as a volunteer or organizer.
+                    </p>
+                </div>
+
+                <form method="post">
+
+                    <div asp-validation-summary="ModelOnly"
+                         class="alert alert-danger">
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Input.FullName"
+                               class="form-label">
+                        </label>
+
+                        <input asp-for="Input.FullName"
+                               class="form-control"
+                               placeholder="Your full name" />
+
+                        <span asp-validation-for="Input.FullName"
+                              class="text-danger">
+                        </span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Input.Email"
+                               class="form-label">
+                        </label>
+
+                        <input asp-for="Input.Email"
+                               class="form-control"
+                               placeholder="name@example.com" />
+
+                        <span asp-validation-for="Input.Email"
+                              class="text-danger">
+                        </span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Input.PhoneNumber"
+                               class="form-label">
+                        </label>
+
+                        <input asp-for="Input.PhoneNumber"
+                               class="form-control"
+                               placeholder="+41 ..." />
+
+                        <span asp-validation-for="Input.PhoneNumber"
+                              class="text-danger">
+                        </span>
+                    </div>
+
+                    <div class="row">
+
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="Input.CountryId"
+                                   class="form-label">
+                            </label>
+
+                            <select asp-for="Input.CountryId"
+                                    asp-items="Model.Countries"
+                                    id="countrySelect"
+                                    class="form-select">
+
+                                <option value="">
+                                    Select a country
+                                </option>
+                            </select>
+
+                            <span asp-validation-for="Input.CountryId"
+                                  class="text-danger">
+                            </span>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="Input.CityId"
+                                   class="form-label">
+                            </label>
+
+                            <select asp-for="Input.CityId"
+                                    asp-items="Model.Cities"
+                                    id="citySelect"
+                                    class="form-select"
+                                    disabled="@(!Model.Input.CountryId.HasValue)">
+
+                                <option value="">
+                                    Select a city
+                                </option>
+                            </select>
+
+                            <span asp-validation-for="Input.CityId"
+                                  class="text-danger">
+                            </span>
+                        </div>
+
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Input.Bio"
+                               class="form-label">
+                        </label>
+
+                        <textarea asp-for="Input.Bio"
+                                  class="form-control"
+                                  rows="3"
+                                  placeholder="Tell us a little about yourself">
+                        </textarea>
+
+                        <span asp-validation-for="Input.Bio"
+                              class="text-danger">
+                        </span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Input.Skills"
+                               class="form-label">
+                        </label>
+
+                        <input asp-for="Input.Skills"
+                               class="form-control"
+                               placeholder="e.g. First aid, teamwork, event support" />
+
+                        <span asp-validation-for="Input.Skills"
+                              class="text-danger">
+                        </span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Input.Role"
+                               class="form-label">
+                        </label>
+
+                        <select asp-for="Input.Role"
+                                class="form-select">
+
+                            <option value="">
+                                Select a role
+                            </option>
+
+                            <option value="@UserRoles.Volunteer">
+                                Volunteer
+                            </option>
+
+                            <option value="@UserRoles.Organizer">
+                                Organizer
+                            </option>
+                        </select>
+
+                        <span asp-validation-for="Input.Role"
+                              class="text-danger">
+                        </span>
+                    </div>
+
+                    <div class="row">
+
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="Input.Password"
+                                   class="form-label">
+                            </label>
+
+                            <input asp-for="Input.Password"
+                                   class="form-control" />
+
+                            <span asp-validation-for="Input.Password"
+                                  class="text-danger">
+                            </span>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="Input.ConfirmPassword"
+                                   class="form-label">
+                            </label>
+
+                            <input asp-for="Input.ConfirmPassword"
+                                   class="form-control" />
+
+                            <span asp-validation-for="Input.ConfirmPassword"
+                                  class="text-danger">
+                            </span>
+                        </div>
+
+                    </div>
+
+                    <button type="submit"
+                            class="btn btn-primary w-100 mt-2">
+                        Create Account
+                    </button>
+
+                </form>
+
+                <div class="text-center mt-4">
+                    <span class="text-muted">
+                        Already have an account?
+                    </span>
+
+                    <a asp-area="Identity"
+                       asp-page="/Account/Login">
+                        Sign in
+                    </a>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+
+    <script>
+        const countrySelect =
+            document.getElementById("countrySelect");
+
+        const citySelect =
+            document.getElementById("citySelect");
+
+        countrySelect.addEventListener(
+            "change",
+            async function () {
+
+                const countryId = this.value;
+
+                citySelect.innerHTML =
+                    '<option value="">Select a city</option>';
+
+                if (!countryId) {
+                    citySelect.disabled = true;
+                    return;
+                }
+
+                citySelect.disabled = true;
+
+                try {
+                    const response =
+                        await fetch(
+                            `/Locations/GetCities?countryId=${countryId}`
+                        );
+
+                    if (!response.ok) {
+                        throw new Error(
+                            "Unable to load cities."
+                        );
+                    }
+
+                    const cities =
+                        await response.json();
+
+                    cities.forEach(city => {
+                        const option =
+                            document.createElement("option");
+
+                        option.value = city.id;
+                        option.textContent = city.name;
+
+                        citySelect.appendChild(option);
+                    });
+
+                    citySelect.disabled = false;
+                }
+                catch (error) {
+                    console.error(error);
+
+                    citySelect.innerHTML =
+                        '<option value="">Unable to load cities</option>';
+                }
+            });
+    </script>
+}

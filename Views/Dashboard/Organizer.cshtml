@@ -1,0 +1,782 @@
+﻿@using VolunteerHub.Constants
+@model VolunteerHub.ViewModels.OrganizerDashboardViewModel
+
+@{
+    ViewData["Title"] = "Organizer Dashboard";
+}
+
+<!-- WELCOME HEADER -->
+
+<div class="row align-items-center g-4 mb-5">
+
+    <div class="col-lg-8">
+
+        <div class="section-eyebrow">
+            Organizer Dashboard
+        </div>
+
+        <h1 class="mb-2">
+            Welcome back,
+            @Model.FullName
+        </h1>
+
+        <p class="text-muted mb-0">
+            Manage your volunteer opportunities, applications
+            and community activity from one place.
+        </p>
+
+    </div>
+
+
+    <div class="col-lg-4 text-lg-end">
+
+        <a asp-controller="VolunteerActions"
+           asp-action="Create"
+           class="btn btn-primary">
+
+            + Create Opportunity
+
+        </a>
+
+    </div>
+
+</div>
+
+
+<!-- MAIN STATISTICS -->
+
+<div class="row g-4 mb-5">
+
+    <!-- TOTAL ACTIONS -->
+
+    <div class="col-xl-3 col-md-6">
+
+        <div class="card h-100">
+
+            <div class="card-body p-4">
+
+                <div class="d-flex justify-content-between align-items-start">
+
+                    <div>
+
+                        <div class="text-muted small mb-2">
+                            Total Actions
+                        </div>
+
+                        <div class="display-6 fw-bold">
+                            @Model.TotalActions
+                        </div>
+
+                    </div>
+
+                    <div class="category-icon mb-0">
+                        🌍
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ACTIVE ACTIONS -->
+
+    <div class="col-xl-3 col-md-6">
+
+        <div class="card h-100">
+
+            <div class="card-body p-4">
+
+                <div class="d-flex justify-content-between align-items-start">
+
+                    <div>
+
+                        <div class="text-muted small mb-2">
+                            Active Actions
+                        </div>
+
+                        <div class="display-6 fw-bold">
+                            @Model.ActiveActions
+                        </div>
+
+                    </div>
+
+                    <div class="category-icon mb-0">
+                        🌱
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- PENDING -->
+
+    <div class="col-xl-3 col-md-6">
+
+        <div class="card h-100">
+
+            <div class="card-body p-4">
+
+                <div class="d-flex justify-content-between align-items-start">
+
+                    <div>
+
+                        <div class="text-muted small mb-2">
+                            Pending Applications
+                        </div>
+
+                        <div class="display-6 fw-bold">
+                            @Model.PendingApplications
+                        </div>
+
+                    </div>
+
+                    <div class="category-icon mb-0">
+                        ⏳
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- APPROVED VOLUNTEERS -->
+
+    <div class="col-xl-3 col-md-6">
+
+        <div class="card h-100">
+
+            <div class="card-body p-4">
+
+                <div class="d-flex justify-content-between align-items-start">
+
+                    <div>
+
+                        <div class="text-muted small mb-2">
+                            Approved Volunteers
+                        </div>
+
+                        <div class="display-6 fw-bold">
+                            @Model.ApprovedVolunteers
+                        </div>
+
+                    </div>
+
+                    <div class="category-icon mb-0">
+                        🤝
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- SECONDARY STATS + QUICK ACTIONS -->
+
+<div class="row g-4 mb-5">
+
+    <!-- ORGANIZER OVERVIEW -->
+
+    <div class="col-lg-7">
+
+        <div class="impact-section h-100">
+
+            <div class="row align-items-center g-4">
+
+                <div class="col-md-8">
+
+                    <div class="mb-2"
+                         style="
+                            color: rgba(255,255,255,.75);
+                            font-weight: 700;
+                            text-transform: uppercase;
+                            letter-spacing: .08em;
+                            font-size: .78rem;
+                         ">
+
+                        Community Overview
+
+                    </div>
+
+                    <h2 class="text-white mb-3">
+                        Build opportunities that matter.
+                    </h2>
+
+                    <p class="mb-3"
+                       style="color: rgba(255,255,255,.78);">
+
+                        You currently have
+                        <strong class="text-white">
+                            @Model.StartingSoon
+                        </strong>
+
+                        @(Model.StartingSoon == 1
+                            ? "action"
+                            : "actions")
+
+                        starting within the next 7 days.
+
+                    </p>
+
+                    <p class="mb-0"
+                       style="color: rgba(255,255,255,.78);">
+
+                        <strong class="text-white">
+                            @Model.AvailableShifts
+                        </strong>
+
+                        @(Model.AvailableShifts == 1
+                            ? "shift still has"
+                            : "shifts still have")
+
+                        available volunteer capacity.
+
+                    </p>
+
+                </div>
+
+
+                <div class="col-md-4 text-md-center">
+
+                    <div style="
+                            font-size: 4.5rem;
+                            line-height: 1;
+                         ">
+                        🌿
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- QUICK ACTIONS -->
+
+    <div class="col-lg-5">
+
+        <div class="card h-100">
+
+            <div class="card-body p-4">
+
+                <h2 class="h5 mb-1">
+                    Quick Actions
+                </h2>
+
+                <p class="text-muted mb-4">
+                    Manage your volunteering activity.
+                </p>
+
+
+                <div class="d-grid gap-2">
+
+                    <a asp-controller="VolunteerActions"
+                       asp-action="Create"
+                       class="btn btn-primary">
+
+                        Create Opportunity
+
+                    </a>
+
+
+                    <a asp-controller="VolunteerActions"
+                       asp-action="MyActions"
+                       class="btn btn-outline-primary">
+
+                        My Actions
+
+                    </a>
+
+
+                    <a asp-controller="OrganizerRequests"
+                       asp-action="Index"
+                       class="btn btn-outline-primary">
+
+                        Manage Applications
+
+                    </a>
+
+
+                    <a asp-controller="Dashboard"
+                       asp-action="OrganizerStatistics"
+                       class="btn btn-outline-secondary">
+
+                        View Statistics
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- UPCOMING ACTIONS -->
+
+<div class="d-flex flex-wrap justify-content-between align-items-end gap-3 mb-3">
+
+    <div>
+
+        <div class="section-eyebrow">
+            Coming up
+        </div>
+
+        <h2 class="h3 mb-0">
+            Upcoming Actions
+        </h2>
+
+    </div>
+
+
+    <a asp-controller="VolunteerActions"
+       asp-action="MyActions"
+       class="btn btn-outline-primary">
+
+        View All Actions
+
+    </a>
+
+</div>
+
+
+@if (Model.UpcomingActions.Any())
+{
+    <div class="row g-4 mb-5">
+
+        @foreach (var action in Model.UpcomingActions)
+        {
+            <div class="col-lg-6">
+
+                <div class="card shadow-sm h-100">
+
+                    <div class="card-body p-4">
+
+                        <div class="d-flex justify-content-between align-items-start gap-3 mb-3">
+
+                            <div>
+
+                                @if (action.Status ==
+                                    VolunteerActionStatuses.Published)
+                                {
+                                    <span class="badge bg-primary mb-2">
+                                        Published
+                                    </span>
+                                }
+                                else if (action.Status ==
+                                    VolunteerActionStatuses.InProgress)
+                                {
+                                    <span class="badge bg-success mb-2">
+                                        In Progress
+                                    </span>
+                                }
+
+                                <h3 class="h5 mb-1">
+                                    @action.Title
+                                </h3>
+
+                                <div class="text-muted">
+                                    @action.Category
+                                </div>
+
+                            </div>
+
+
+                            <div style="font-size: 2rem;">
+
+                                @switch (action.Category)
+                                {
+                                    case VolunteerActionCategories.Environment:
+                                        <span>🌿</span>
+                                        break;
+
+                                    case VolunteerActionCategories.Animals:
+                                        <span>🐾</span>
+                                        break;
+
+                                    case VolunteerActionCategories.Social:
+                                        <span>🤝</span>
+                                        break;
+
+                                    case VolunteerActionCategories.Education:
+                                        <span>📚</span>
+                                        break;
+
+                                    case VolunteerActionCategories.Health:
+                                        <span>💚</span>
+                                        break;
+
+                                    default:
+                                        <span>✨</span>
+                                        break;
+                                }
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="small mb-2">
+
+                            <span class="me-2">
+                                📍
+                            </span>
+
+                            @if (action.City != null &&
+                                 action.City.Country != null)
+                            {
+                                <span class="fw-semibold">
+                                    @action.City.Name,
+                                    @action.City.Country.Name
+                                </span>
+                            }
+                            else
+                            {
+                                <span class="text-muted">
+                                    Location not specified
+                                </span>
+                            }
+
+                        </div>
+
+
+                        <div class="small mb-2">
+
+                            <span class="me-2">
+                                📅
+                            </span>
+
+                            <span>
+                                @action.StartDate.ToString("dd MMM yyyy")
+                            </span>
+
+                        </div>
+
+
+                        <div class="small mb-4">
+
+                            <span class="me-2">
+                                🕒
+                            </span>
+
+                            <span>
+                                @action.StartDate.ToString("HH:mm")
+                                -
+                                @action.EndDate.ToString("HH:mm")
+                            </span>
+
+                        </div>
+
+
+                        <div class="d-flex flex-wrap gap-2">
+
+                            <a asp-controller="VolunteerActions"
+                               asp-action="Details"
+                               asp-route-id="@action.Id"
+                               class="btn btn-outline-primary">
+
+                                View Details
+
+                            </a>
+
+
+                            <a asp-controller="Shifts"
+                               asp-action="Index"
+                               asp-route-actionId="@action.Id"
+                               class="btn btn-outline-secondary">
+
+                                Manage Shifts
+
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+        }
+
+    </div>
+}
+else
+{
+    <div class="eco-panel text-center py-5 mb-5">
+
+        <div class="mb-3"
+             style="font-size: 3rem;">
+            🌱
+        </div>
+
+        <h3 class="h5">
+            No upcoming actions
+        </h3>
+
+        <p class="text-muted mb-4">
+            Create a new opportunity and start building your volunteer community.
+        </p>
+
+        <a asp-controller="VolunteerActions"
+           asp-action="Create"
+           class="btn btn-primary">
+
+            Create Opportunity
+
+        </a>
+
+    </div>
+}
+
+
+<!-- RECENT APPLICATIONS -->
+
+<div class="d-flex flex-wrap justify-content-between align-items-end gap-3 mb-3">
+
+    <div>
+
+        <div class="section-eyebrow">
+            Volunteer activity
+        </div>
+
+        <h2 class="h3 mb-0">
+            Recent Applications
+        </h2>
+
+    </div>
+
+
+    <a asp-controller="OrganizerRequests"
+       asp-action="Index"
+       class="btn btn-outline-primary">
+
+        Manage All
+
+    </a>
+
+</div>
+
+
+@if (Model.RecentApplications.Any())
+{
+    <div class="card">
+
+        <div class="table-responsive">
+
+            <table class="table mb-0">
+
+                <thead>
+
+                    <tr>
+
+                        <th class="ps-4">
+                            Volunteer
+                        </th>
+
+                        <th>
+                            Opportunity
+                        </th>
+
+                        <th>
+                            Shift
+                        </th>
+
+                        <th>
+                            Applied
+                        </th>
+
+                        <th>
+                            Status
+                        </th>
+
+                        <th class="text-end pe-4">
+                            Manage
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                    @foreach (var request in Model.RecentApplications)
+                    {
+                        <tr>
+
+                            <td class="ps-4">
+
+                                <div class="fw-semibold">
+                                    @request.Volunteer.FullName
+                                </div>
+
+                                <div class="text-muted small">
+                                    @request.Volunteer.Email
+                                </div>
+
+                            </td>
+
+
+                            <td>
+
+                                <div class="fw-semibold">
+                                    @request.Shift.VolunteerAction.Title
+                                </div>
+
+                                @if (request.Shift.VolunteerAction.City != null)
+                                {
+                                    <div class="text-muted small">
+                                        @request.Shift.VolunteerAction.City.Name
+                                    </div>
+                                }
+
+                            </td>
+
+
+                            <td>
+                                @request.Shift.Title
+                            </td>
+
+
+                            <td>
+                                @request.ApplicationDate.ToString("dd MMM yyyy")
+                            </td>
+
+
+                            <td>
+
+                                @switch (request.Status)
+                                {
+                                    case ParticipationRequestStatuses.Pending:
+
+                                        <span class="badge bg-warning text-dark">
+                                            Pending
+                                        </span>
+
+                                        break;
+
+
+                                    case ParticipationRequestStatuses.Approved:
+
+                                        <span class="badge bg-success">
+                                            Approved
+                                        </span>
+
+                                        break;
+
+
+                                    case ParticipationRequestStatuses.Waitlist:
+
+                                        <span class="badge bg-info">
+                                            Waitlist
+                                        </span>
+
+                                        break;
+
+
+                                    case ParticipationRequestStatuses.Rejected:
+
+                                        <span class="badge bg-danger">
+                                            Rejected
+                                        </span>
+
+                                        break;
+
+
+                                    case ParticipationRequestStatuses.Completed:
+
+                                        <span class="badge bg-dark">
+                                            Completed
+                                        </span>
+
+                                        break;
+
+
+                                    case ParticipationRequestStatuses.Cancelled:
+
+                                        <span class="badge bg-secondary">
+                                            Cancelled
+                                        </span>
+
+                                        break;
+
+
+                                    default:
+
+                                        <span class="badge bg-secondary">
+                                            @request.Status
+                                        </span>
+
+                                        break;
+                                }
+
+                            </td>
+
+
+                            <td class="text-end pe-4">
+
+                                <a asp-controller="OrganizerRequests"
+                                   asp-action="Index"
+                                   class="btn btn-sm btn-outline-primary">
+
+                                    Manage
+
+                                </a>
+
+                            </td>
+
+                        </tr>
+                    }
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+}
+else
+{
+    <div class="eco-panel text-center py-5">
+
+        <div class="mb-3"
+             style="font-size: 3rem;">
+            🤝
+        </div>
+
+        <h3 class="h5">
+            No applications yet
+        </h3>
+
+        <p class="text-muted mb-0">
+            Volunteer applications will appear here when people apply to your shifts.
+        </p>
+
+    </div>
+}

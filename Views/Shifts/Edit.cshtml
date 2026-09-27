@@ -1,0 +1,459 @@
+﻿@using VolunteerHub.Constants
+@model VolunteerHub.Models.Shift
+
+@{
+    ViewData["Title"] = "Edit Shift";
+
+    var volunteerAction =
+        ViewBag.VolunteerAction as VolunteerHub.Models.VolunteerAction;
+
+    bool hasApplications =
+        ViewBag.HasApplications is bool applications &&
+        applications;
+
+    int approvedCount =
+        ViewBag.ApprovedCount is int count
+            ? count
+            : 0;
+
+    bool lockSchedule =
+        volunteerAction != null &&
+        volunteerAction.Status ==
+            VolunteerActionStatuses.Published &&
+        hasApplications;
+
+    int minimumCapacity =
+        approvedCount > 0
+            ? approvedCount
+            : 1;
+}
+
+
+<div class="row justify-content-center">
+
+    <div class="col-lg-8">
+
+        <!-- HEADER -->
+
+        <div class="mb-4">
+
+            <a asp-action="Index"
+               asp-route-actionId="@Model.VolunteerActionId"
+               class="text-decoration-none">
+
+                ← Back to Shifts
+
+            </a>
+
+            <h1 class="mt-3 mb-1">
+                Edit Shift
+            </h1>
+
+            @if (volunteerAction != null)
+            {
+                <p class="text-muted mb-0">
+                    Update this shift for
+                    <strong>@volunteerAction.Title</strong>.
+                </p>
+            }
+
+        </div>
+
+
+        <!-- OPPORTUNITY INFORMATION -->
+
+        @if (volunteerAction != null)
+        {
+            <div class="card mb-4">
+
+                <div class="card-body">
+
+                    <div class="d-flex flex-wrap justify-content-between align-items-start gap-3 mb-3">
+
+                        <div>
+
+                            <div class="text-muted small">
+                                Opportunity
+                            </div>
+
+                            <div class="fw-semibold">
+                                @volunteerAction.Title
+                            </div>
+
+                        </div>
+
+
+                        <div>
+
+                            @if (volunteerAction.Status ==
+                                VolunteerActionStatuses.Draft)
+                            {
+                                <span class="badge bg-secondary">
+                                    Draft
+                                </span>
+                            }
+                            else if (volunteerAction.Status ==
+                                VolunteerActionStatuses.Published)
+                            {
+                                <span class="badge bg-primary">
+                                    Published
+                                </span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-secondary">
+                                    @volunteerAction.Status
+                                </span>
+                            }
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="row g-3">
+
+                        <div class="col-md-6">
+
+                            <div class="text-muted small">
+                                Action Starts
+                            </div>
+
+                            <div class="fw-semibold">
+                                @volunteerAction.StartDate.ToString(
+                                    "dd MMM yyyy, HH:mm")
+                            </div>
+
+                        </div>
+
+
+                        <div class="col-md-6">
+
+                            <div class="text-muted small">
+                                Action Ends
+                            </div>
+
+                            <div class="fw-semibold">
+                                @volunteerAction.EndDate.ToString(
+                                    "dd MMM yyyy, HH:mm")
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+        }
+
+
+        <!-- EDIT RESTRICTIONS -->
+
+        @if (lockSchedule)
+        {
+            <div class="alert alert-info mb-4">
+
+                <div class="fw-semibold mb-1">
+                    Shift schedule locked
+                </div>
+
+                <div>
+                    Volunteers have already applied to this shift.
+                    The start and end times can no longer be changed.
+                </div>
+
+            </div>
+        }
+
+
+        @if (approvedCount > 0)
+        {
+            <div class="alert alert-light border mb-4">
+
+                <div class="fw-semibold mb-1">
+                    Capacity protection
+                </div>
+
+                <div>
+                    This shift currently has
+                    <strong>
+                        @approvedCount
+                        @(approvedCount == 1
+                            ? "approved volunteer"
+                            : "approved volunteers")
+                    </strong>.
+
+                    The capacity cannot be reduced below
+                    <strong>@approvedCount</strong>.
+                </div>
+
+            </div>
+        }
+
+
+        <!-- FORM -->
+
+        <div class="card">
+
+            <div class="card-body p-4 p-md-5">
+
+                <form asp-action="Edit"
+                      asp-route-id="@Model.Id"
+                      method="post">
+
+                    <input asp-for="Id"
+                           type="hidden" />
+
+                    <input asp-for="VolunteerActionId"
+                           type="hidden" />
+
+
+                    <div asp-validation-summary="ModelOnly"
+                         class="alert alert-danger">
+                    </div>
+
+
+                    <!-- TITLE -->
+
+                    <div class="mb-3">
+
+                        <label asp-for="Title"
+                               class="form-label">
+                        </label>
+
+                        <input asp-for="Title"
+                               class="form-control" />
+
+                        <span asp-validation-for="Title"
+                              class="text-danger">
+                        </span>
+
+                    </div>
+
+
+                    <!-- DESCRIPTION -->
+
+                    <div class="mb-3">
+
+                        <label asp-for="Description"
+                               class="form-label">
+                        </label>
+
+                        <textarea asp-for="Description"
+                                  class="form-control"
+                                  rows="4">
+                        </textarea>
+
+                        <span asp-validation-for="Description"
+                              class="text-danger">
+                        </span>
+
+                    </div>
+
+
+                    <!-- SHIFT SCHEDULE -->
+
+                    <div class="row">
+
+                        <div class="col-md-6 mb-3">
+
+                            <label asp-for="StartTime"
+                                   class="form-label">
+                            </label>
+
+
+                            @if (lockSchedule)
+                            {
+                                <input asp-for="StartTime"
+                                       asp-format="{0:yyyy-MM-ddTHH:mm}"
+                                       type="datetime-local"
+                                       class="form-control bg-light"
+                                       readonly />
+                            }
+                            else
+                            {
+                                <input asp-for="StartTime"
+                                       asp-format="{0:yyyy-MM-ddTHH:mm}"
+                                       type="datetime-local"
+                                       class="form-control" />
+                            }
+
+
+                            <span asp-validation-for="StartTime"
+                                  class="text-danger">
+                            </span>
+
+
+                            @if (lockSchedule)
+                            {
+                                <div class="form-text">
+                                    Start time is locked because volunteers
+                                    have already applied.
+                                </div>
+                            }
+
+                        </div>
+
+
+                        <div class="col-md-6 mb-3">
+
+                            <label asp-for="EndTime"
+                                   class="form-label">
+                            </label>
+
+
+                            @if (lockSchedule)
+                            {
+                                <input asp-for="EndTime"
+                                       asp-format="{0:yyyy-MM-ddTHH:mm}"
+                                       type="datetime-local"
+                                       class="form-control bg-light"
+                                       readonly />
+                            }
+                            else
+                            {
+                                <input asp-for="EndTime"
+                                       asp-format="{0:yyyy-MM-ddTHH:mm}"
+                                       type="datetime-local"
+                                       class="form-control" />
+                            }
+
+
+                            <span asp-validation-for="EndTime"
+                                  class="text-danger">
+                            </span>
+
+
+                            @if (lockSchedule)
+                            {
+                                <div class="form-text">
+                                    End time is locked because volunteers
+                                    have already applied.
+                                </div>
+                            }
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- CAPACITY -->
+
+                    <div class="mb-3">
+
+                        <label asp-for="MaxVolunteers"
+                               class="form-label">
+                        </label>
+
+                        <input asp-for="MaxVolunteers"
+                               type="number"
+                               min="@minimumCapacity"
+                               max="1000"
+                               class="form-control" />
+
+                        <span asp-validation-for="MaxVolunteers"
+                              class="text-danger">
+                        </span>
+
+
+                        @if (approvedCount > 0)
+                        {
+                            <div class="form-text">
+                                Minimum capacity:
+                                <strong>@approvedCount</strong>
+                                because this shift already has
+                                @approvedCount
+                                @(approvedCount == 1
+                                    ? "approved volunteer"
+                                    : "approved volunteers").
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="form-text">
+                                Maximum number of volunteers who can be
+                                approved for this shift.
+                            </div>
+                        }
+
+                    </div>
+
+
+                    <!-- REQUIRED SKILL -->
+
+                    <div class="mb-3">
+
+                        <label asp-for="RequiredSkill"
+                               class="form-label">
+                        </label>
+
+                        <input asp-for="RequiredSkill"
+                               class="form-control"
+                               placeholder="Optional, e.g. First aid" />
+
+                        <span asp-validation-for="RequiredSkill"
+                              class="text-danger">
+                        </span>
+
+                    </div>
+
+
+                    <!-- NOTES -->
+
+                    <div class="mb-4">
+
+                        <label asp-for="Notes"
+                               class="form-label">
+                        </label>
+
+                        <textarea asp-for="Notes"
+                                  class="form-control"
+                                  rows="3">
+                        </textarea>
+
+                        <span asp-validation-for="Notes"
+                              class="text-danger">
+                        </span>
+
+                    </div>
+
+
+                    <!-- BUTTONS -->
+
+                    <div class="d-flex flex-wrap gap-2">
+
+                        <button type="submit"
+                                class="btn btn-primary">
+
+                            Save Changes
+
+                        </button>
+
+
+                        <a asp-action="Index"
+                           asp-route-actionId="@Model.VolunteerActionId"
+                           class="btn btn-secondary">
+
+                            Cancel
+
+                        </a>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+@section Scripts {
+
+    <partial name="_ValidationScriptsPartial" />
+
+}

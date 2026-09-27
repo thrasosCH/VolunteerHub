@@ -1,0 +1,218 @@
+﻿@model VolunteerHub.Models.ApplicationUser
+
+@{
+    ViewData["Title"] = "My Profile";
+}
+
+<div class="row justify-content-center">
+
+    <div class="col-xl-9 col-lg-10">
+
+        <!-- HEADER -->
+
+        <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
+
+            <div>
+
+                <div class="section-eyebrow">
+                    Account
+                </div>
+
+                <h1 class="mb-2">
+                    My Profile
+                </h1>
+
+                <p class="text-muted mb-0">
+                    View and manage your personal information.
+                </p>
+
+            </div>
+
+            <div>
+
+                <a asp-controller="Profile"
+                   asp-action="Edit"
+                   class="btn btn-primary">
+
+                    Edit Profile
+
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <!-- PROFILE CARD -->
+
+        <div class="card">
+
+            <div class="card-body p-4 p-md-5">
+
+                <!-- NAME -->
+
+                <div class="mb-4">
+
+                    <div class="text-muted small mb-1">
+                        Full Name
+                    </div>
+
+                    <div class="fs-5 fw-semibold">
+                        @Model.FullName
+                    </div>
+
+                </div>
+
+
+                <hr />
+
+
+                <!-- EMAIL -->
+
+                <div class="row g-4 py-3">
+
+                    <div class="col-md-6">
+
+                        <div class="text-muted small mb-1">
+                            Email
+                        </div>
+
+                        <div class="fw-semibold">
+                            @Model.Email
+                        </div>
+
+                    </div>
+
+
+                    <!-- PHONE -->
+
+                    <div class="col-md-6">
+
+                        <div class="text-muted small mb-1">
+                            Phone Number
+                        </div>
+
+                        @if (!string.IsNullOrWhiteSpace(Model.PhoneNumber))
+                        {
+                            <div class="fw-semibold">
+                                @Model.PhoneNumber
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="text-muted">
+                                Not provided
+                            </div>
+                        }
+
+                    </div>
+
+                </div>
+
+
+                <hr />
+
+
+                <!-- LOCATION -->
+
+                <div class="py-3">
+
+                    <div class="text-muted small mb-1">
+                        Location
+                    </div>
+
+                    @if (Model.City != null &&
+                         Model.City.Country != null)
+                    {
+                        <div class="fw-semibold">
+                            @Model.City.Name, @Model.City.Country.Name
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="text-muted">
+                            Not specified
+                        </div>
+                    }
+
+                </div>
+
+
+                <hr />
+
+
+                <!-- BIO -->
+
+                <div class="py-3">
+
+                    <div class="text-muted small mb-1">
+                        About Me
+                    </div>
+
+                    @if (!string.IsNullOrWhiteSpace(Model.Bio))
+                    {
+                        <p class="mb-0">
+                            @Model.Bio
+                        </p>
+                    }
+                    else
+                    {
+                        <p class="text-muted mb-0">
+                            No bio added yet.
+                        </p>
+                    }
+
+                </div>
+
+
+                <hr />
+
+
+                <!-- SKILLS -->
+
+                <div class="py-3">
+
+                    <div class="text-muted small mb-1">
+                        Skills & Interests
+                    </div>
+
+                    @if (!string.IsNullOrWhiteSpace(Model.Skills))
+                    {
+                        <p class="mb-0">
+                            @Model.Skills
+                        </p>
+                    }
+                    else
+                    {
+                        <p class="text-muted mb-0">
+                            No skills or interests added yet.
+                        </p>
+                    }
+
+                </div>
+
+
+                <hr />
+
+
+                <!-- REGISTRATION DATE -->
+
+                <div class="pt-3">
+
+                    <div class="text-muted small mb-1">
+                        Member Since
+                    </div>
+
+                    <div class="fw-semibold">
+                        @Model.RegistrationDate.ToString("dd MMMM yyyy")
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

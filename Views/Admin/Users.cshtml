@@ -1,0 +1,269 @@
+﻿@using VolunteerHub.Constants
+@model IEnumerable<VolunteerHub.ViewModels.AdminUserViewModel>
+
+@{
+    ViewData["Title"] = "Manage Users";
+}
+
+<!-- HEADER -->
+
+<div class="row align-items-center g-4 mb-5">
+
+    <div class="col-lg-8">
+
+        <div class="section-eyebrow">
+            User Administration
+        </div>
+
+        <h1 class="mb-2">
+            Manage Users
+        </h1>
+
+        <p class="text-muted mb-0">
+            Review registered users, their roles and account information.
+        </p>
+
+    </div>
+
+
+    <div class="col-lg-4 text-lg-end">
+
+        <a asp-controller="Admin"
+           asp-action="Index"
+           class="btn btn-outline-secondary">
+
+            Back to Dashboard
+
+        </a>
+
+    </div>
+
+</div>
+
+
+<!-- MESSAGES -->
+
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success mb-4">
+        @TempData["Success"]
+    </div>
+}
+
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger mb-4">
+        @TempData["Error"]
+    </div>
+}
+
+
+<!-- SUMMARY -->
+
+<div class="eco-panel mb-4">
+
+    <div class="d-flex flex-wrap justify-content-between align-items-center gap-3">
+
+        <div>
+
+            <h2 class="h5 mb-1">
+                Registered Users
+            </h2>
+
+            <p class="text-muted mb-0">
+                All accounts currently registered on VolunteerHub.
+            </p>
+
+        </div>
+
+
+        <span class="badge bg-light text-dark border">
+
+            @Model.Count()
+            @(Model.Count() == 1 ? "user" : "users")
+
+        </span>
+
+    </div>
+
+</div>
+
+
+@if (Model.Any())
+{
+    <div class="card">
+
+        <div class="table-responsive">
+
+            <table class="table mb-0">
+
+                <thead>
+
+                    <tr>
+
+                        <th class="ps-4">
+                            User
+                        </th>
+
+                        <th>
+                            Role
+                        </th>
+
+                        <th>
+                            Location
+                        </th>
+
+                        <th>
+                            Joined
+                        </th>
+
+                        <th class="text-end pe-4">
+                            Actions
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                    @foreach (var user in Model)
+                    {
+                        <tr>
+
+                            <!-- USER -->
+
+                            <td class="ps-4">
+
+                                <div class="fw-semibold">
+                                    @user.FullName
+                                </div>
+
+                                <div class="text-muted small">
+                                    @user.Email
+                                </div>
+
+                            </td>
+
+
+                            <!-- ROLE -->
+
+                            <td>
+
+                                @switch (user.Role)
+                                {
+                                    case UserRoles.Volunteer:
+
+                                        <span class="badge bg-success">
+                                            Volunteer
+                                        </span>
+
+                                        break;
+
+
+                                    case UserRoles.Organizer:
+
+                                        <span class="badge bg-primary">
+                                            Organizer
+                                        </span>
+
+                                        break;
+
+
+                                    case UserRoles.Admin:
+
+                                        <span class="badge bg-dark">
+                                            Admin
+                                        </span>
+
+                                        break;
+
+
+                                    default:
+
+                                        <span class="badge bg-secondary">
+                                            @user.Role
+                                        </span>
+
+                                        break;
+                                }
+
+                            </td>
+
+
+                            <!-- LOCATION -->
+
+                            <td>
+                                @user.Location
+                            </td>
+
+
+                            <!-- JOINED -->
+
+                            <td>
+                                @user.RegistrationDate.ToString("dd MMM yyyy")
+                            </td>
+
+
+                            <!-- ACTIONS -->
+
+                            <td class="text-end pe-4">
+
+                                @if (user.Role == UserRoles.Admin)
+                                {
+                                    <span class="text-muted small">
+                                        Protected account
+                                    </span>
+                                }
+                                else
+                                {
+                                    <form asp-controller="Admin"
+                                          asp-action="DeleteUser"
+                                          asp-route-id="@user.Id"
+                                          method="post"
+                                          class="d-inline"
+                                          onsubmit="return confirm('Are you sure you want to delete this user? This may also remove related data.');">
+
+                                        <button type="submit"
+                                                class="btn btn-sm btn-outline-danger">
+
+                                            Delete
+
+                                        </button>
+
+                                    </form>
+                                }
+
+                            </td>
+
+                        </tr>
+                    }
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+}
+else
+{
+    <div class="eco-panel text-center py-5">
+
+        <div class="mb-3"
+             style="font-size: 3rem;">
+            👥
+        </div>
+
+        <h2 class="h5">
+            No users found
+        </h2>
+
+        <p class="text-muted mb-0">
+            There are currently no registered users.
+        </p>
+
+    </div>
+}

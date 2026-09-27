@@ -1,0 +1,254 @@
+﻿@model VolunteerHub.Models.ApplicationUser
+
+@{
+    ViewData["Title"] = "Edit Profile";
+
+    var countries =
+        ViewBag.Countries as IEnumerable<SelectListItem>;
+
+    var cities =
+        ViewBag.Cities as IEnumerable<SelectListItem>;
+
+    int? selectedCountryId =
+        ViewBag.CountryId as int?;
+}
+
+@using Microsoft.AspNetCore.Mvc.Rendering
+
+<div class="row justify-content-center">
+
+    <div class="col-lg-8">
+
+        <div class="card">
+
+            <div class="card-body p-4 p-md-5">
+
+                <div class="mb-4">
+                    <h1 class="h2">
+                        Edit Profile
+                    </h1>
+
+                    <p class="text-muted mb-0">
+                        Update your personal information.
+                    </p>
+                </div>
+
+                <form asp-action="Edit"
+                      method="post">
+
+                    <div asp-validation-summary="ModelOnly"
+                         class="alert alert-danger">
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">
+                            Full Name
+                        </label>
+
+                        <input name="fullName"
+                               value="@Model.FullName"
+                               class="form-control" />
+
+                        <span class="text-danger">
+                            @Html.ValidationMessage("FullName")
+                        </span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">
+                            Email
+                        </label>
+
+                        <input value="@Model.Email"
+                               class="form-control"
+                               disabled />
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">
+                            Phone Number
+                        </label>
+
+                        <input name="phoneNumber"
+                               value="@Model.PhoneNumber"
+                               class="form-control"
+                               placeholder="+41 ..." />
+                    </div>
+
+                    <div class="row">
+
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">
+                                Country
+                            </label>
+
+                            <select name="countryId"
+                                    id="countrySelect"
+                                    class="form-select">
+
+                                <option value="">
+                                    Select a country
+                                </option>
+
+                                @if (countries != null)
+                                {
+                                    foreach (var country in countries)
+                                    {
+                                        <option value="@country.Value"
+                                                selected="@(selectedCountryId?.ToString() == country.Value)">
+                                            @country.Text
+                                        </option>
+                                    }
+                                }
+
+                            </select>
+
+                            <span class="text-danger">
+                                @Html.ValidationMessage("CountryId")
+                            </span>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">
+                                City
+                            </label>
+
+                            <select name="cityId"
+                                    id="citySelect"
+                                    class="form-select"
+                                    disabled="@(!selectedCountryId.HasValue)">
+
+                                <option value="">
+                                    Select a city
+                                </option>
+
+                                @if (cities != null)
+                                {
+                                    foreach (var city in cities)
+                                    {
+                                        <option value="@city.Value"
+                                                selected="@(Model.CityId?.ToString() == city.Value)">
+                                            @city.Text
+                                        </option>
+                                    }
+                                }
+
+                            </select>
+
+                            <span class="text-danger">
+                                @Html.ValidationMessage("CityId")
+                            </span>
+                        </div>
+
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">
+                            Bio
+                        </label>
+
+                        <textarea name="bio"
+                                  class="form-control"
+                                  rows="4"
+                                  placeholder="Tell us a little about yourself">@Model.Bio</textarea>
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="form-label">
+                            Skills / Interests
+                        </label>
+
+                        <textarea name="skills"
+                                  class="form-control"
+                                  rows="3"
+                                  placeholder="e.g. Event support, first aid, teamwork">@Model.Skills</textarea>
+                    </div>
+
+                    <button type="submit"
+                            class="btn btn-primary">
+
+                        Save Changes
+
+                    </button>
+
+                    <a asp-action="Index"
+                       class="btn btn-secondary">
+
+                        Cancel
+
+                    </a>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+@section Scripts {
+
+    <script>
+
+        const countrySelect =
+            document.getElementById("countrySelect");
+
+        const citySelect =
+            document.getElementById("citySelect");
+
+        countrySelect.addEventListener(
+            "change",
+            async function () {
+
+                const countryId = this.value;
+
+                citySelect.innerHTML =
+                    '<option value="">Select a city</option>';
+
+                if (!countryId) {
+                    citySelect.disabled = true;
+                    return;
+                }
+
+                citySelect.disabled = true;
+
+                try {
+                    const response =
+                        await fetch(
+                            `/Locations/GetCities?countryId=${countryId}`
+                        );
+
+                    if (!response.ok) {
+                        throw new Error(
+                            "Unable to load cities."
+                        );
+                    }
+
+                    const cities =
+                        await response.json();
+
+                    cities.forEach(city => {
+
+                        const option =
+                            document.createElement("option");
+
+                        option.value = city.id;
+                        option.textContent = city.name;
+
+                        citySelect.appendChild(option);
+                    });
+
+                    citySelect.disabled = false;
+                }
+                catch (error) {
+                    console.error(error);
+
+                    citySelect.innerHTML =
+                        '<option value="">Unable to load cities</option>';
+                }
+            });
+
+    </script>
+}

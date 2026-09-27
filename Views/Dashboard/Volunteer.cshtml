@@ -1,0 +1,691 @@
+﻿@using VolunteerHub.Constants
+@model VolunteerHub.ViewModels.VolunteerDashboardViewModel
+
+@{
+    ViewData["Title"] = "Volunteer Dashboard";
+}
+
+<!-- WELCOME HEADER -->
+
+<div class="row align-items-center g-4 mb-5">
+
+    <div class="col-lg-8">
+
+        <div class="section-eyebrow">
+            Volunteer Dashboard
+        </div>
+
+        <h1 class="mb-2">
+            Welcome back,
+            @Model.FullName
+        </h1>
+
+        <p class="text-muted mb-0">
+            Track your applications, upcoming volunteering
+            and the impact you are making in your community.
+        </p>
+
+    </div>
+
+
+    <div class="col-lg-4 text-lg-end">
+
+        <a asp-controller="VolunteerActions"
+           asp-action="Index"
+           class="btn btn-primary">
+
+            Find Opportunities
+
+        </a>
+
+    </div>
+
+</div>
+
+
+<!-- STATISTICS -->
+
+<div class="row g-4 mb-5">
+
+    <!-- TOTAL -->
+
+    <div class="col-xl-3 col-md-6">
+
+        <div class="card h-100">
+
+            <div class="card-body p-4">
+
+                <div class="d-flex justify-content-between align-items-start">
+
+                    <div>
+
+                        <div class="text-muted small mb-2">
+                            Total Applications
+                        </div>
+
+                        <div class="display-6 fw-bold">
+                            @Model.TotalApplications
+                        </div>
+
+                    </div>
+
+                    <div class="category-icon mb-0">
+                        📋
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- PENDING -->
+
+    <div class="col-xl-3 col-md-6">
+
+        <div class="card h-100">
+
+            <div class="card-body p-4">
+
+                <div class="d-flex justify-content-between align-items-start">
+
+                    <div>
+
+                        <div class="text-muted small mb-2">
+                            Pending
+                        </div>
+
+                        <div class="display-6 fw-bold">
+                            @Model.PendingApplications
+                        </div>
+
+                    </div>
+
+                    <div class="category-icon mb-0">
+                        ⏳
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- APPROVED -->
+
+    <div class="col-xl-3 col-md-6">
+
+        <div class="card h-100">
+
+            <div class="card-body p-4">
+
+                <div class="d-flex justify-content-between align-items-start">
+
+                    <div>
+
+                        <div class="text-muted small mb-2">
+                            Approved
+                        </div>
+
+                        <div class="display-6 fw-bold">
+                            @Model.ApprovedApplications
+                        </div>
+
+                    </div>
+
+                    <div class="category-icon mb-0">
+                        ✅
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- COMPLETED -->
+
+    <div class="col-xl-3 col-md-6">
+
+        <div class="card h-100">
+
+            <div class="card-body p-4">
+
+                <div class="d-flex justify-content-between align-items-start">
+
+                    <div>
+
+                        <div class="text-muted small mb-2">
+                            Completed
+                        </div>
+
+                        <div class="display-6 fw-bold">
+                            @Model.CompletedApplications
+                        </div>
+
+                    </div>
+
+                    <div class="category-icon mb-0">
+                        🌱
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- IMPACT + QUICK ACTIONS -->
+
+<div class="row g-4 mb-5">
+
+    <!-- IMPACT -->
+
+    <div class="col-lg-7">
+
+        <div class="impact-section h-100">
+
+            <div class="row align-items-center g-4">
+
+                <div class="col-md-8">
+
+                    <div class="mb-2"
+                         style="
+                            color: rgba(255,255,255,.75);
+                            font-weight: 700;
+                            text-transform: uppercase;
+                            letter-spacing: .08em;
+                            font-size: .78rem;
+                         ">
+
+                        Your Impact
+
+                    </div>
+
+                    <h2 class="text-white mb-3">
+                        Every contribution counts.
+                    </h2>
+
+                    <p class="mb-0"
+                       style="color: rgba(255,255,255,.78);">
+
+                        You have participated in
+                        <strong class="text-white">
+                            @Model.AttendedActivities
+                        </strong>
+
+                        @(Model.AttendedActivities == 1
+                            ? "volunteer activity"
+                            : "volunteer activities")
+                        so far.
+
+                        Keep going and continue creating
+                        positive change.
+
+                    </p>
+
+                </div>
+
+
+                <div class="col-md-4 text-md-center">
+
+                    <div style="
+                            font-size: 4.5rem;
+                            line-height: 1;
+                         ">
+                        🌍
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- QUICK ACTIONS -->
+
+    <div class="col-lg-5">
+
+        <div class="card h-100">
+
+            <div class="card-body p-4">
+
+                <h2 class="h5 mb-1">
+                    Quick Actions
+                </h2>
+
+                <p class="text-muted mb-4">
+                    Everything you need, one click away.
+                </p>
+
+
+                <div class="d-grid gap-2">
+
+                    <a asp-controller="VolunteerActions"
+                       asp-action="Index"
+                       class="btn btn-primary">
+
+                        Explore Opportunities
+
+                    </a>
+
+
+                    <a asp-controller="ParticipationRequests"
+                       asp-action="MyRequests"
+                       class="btn btn-outline-primary">
+
+                        My Applications
+
+                    </a>
+
+
+                    <a asp-controller="Profile"
+                       asp-action="Index"
+                       class="btn btn-outline-secondary">
+
+                        View Profile
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- UPCOMING VOLUNTEERING -->
+
+<div class="d-flex flex-wrap justify-content-between align-items-end gap-3 mb-3">
+
+    <div>
+
+        <div class="section-eyebrow">
+            What's next
+        </div>
+
+        <h2 class="h3 mb-0">
+            Upcoming Volunteering
+        </h2>
+
+    </div>
+
+</div>
+
+
+@if (Model.UpcomingApplications.Any())
+{
+    <div class="row g-4 mb-5">
+
+        @foreach (var request in Model.UpcomingApplications)
+        {
+            <div class="col-lg-6">
+
+                <div class="card shadow-sm h-100">
+
+                    <div class="card-body p-4">
+
+                        <div class="d-flex justify-content-between align-items-start gap-3 mb-3">
+
+                            <div>
+
+                                <span class="badge bg-success mb-2">
+                                    Approved
+                                </span>
+
+                                <h3 class="h5 mb-1">
+                                    @request.Shift.VolunteerAction.Title
+                                </h3>
+
+                                <div class="text-muted">
+                                    @request.Shift.Title
+                                </div>
+
+                            </div>
+
+                            <div style="font-size: 2rem;">
+                                🌿
+                            </div>
+
+                        </div>
+
+
+                        <div class="small mb-2">
+
+                            <span class="me-2">
+                                📍
+                            </span>
+
+                            @if (request.Shift.VolunteerAction.City != null &&
+                                 request.Shift.VolunteerAction.City.Country != null)
+                            {
+                                <span class="fw-semibold">
+                                    @request.Shift.VolunteerAction.City.Name,
+                                    @request.Shift.VolunteerAction.City.Country.Name
+                                </span>
+                            }
+                            else
+                            {
+                                <span class="text-muted">
+                                    Location not specified
+                                </span>
+                            }
+
+                        </div>
+
+
+                        <div class="small mb-2">
+
+                            <span class="me-2">
+                                📅
+                            </span>
+
+                            <span>
+                                @request.Shift.StartTime.ToString("dd MMM yyyy")
+                            </span>
+
+                        </div>
+
+
+                        <div class="small mb-4">
+
+                            <span class="me-2">
+                                🕒
+                            </span>
+
+                            <span>
+                                @request.Shift.StartTime.ToString("HH:mm")
+                                -
+                                @request.Shift.EndTime.ToString("HH:mm")
+                            </span>
+
+                        </div>
+
+
+                        <a asp-controller="VolunteerActions"
+                           asp-action="Details"
+                           asp-route-id="@request.Shift.VolunteerActionId"
+                           class="btn btn-outline-primary">
+
+                            View Opportunity
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+        }
+
+    </div>
+}
+else
+{
+    <div class="eco-panel text-center py-5 mb-5">
+
+        <div class="mb-3"
+             style="font-size: 3rem;">
+            🌱
+        </div>
+
+        <h3 class="h5">
+            Nothing scheduled yet
+        </h3>
+
+        <p class="text-muted mb-4">
+            You don't have any approved upcoming shifts.
+            Discover an opportunity and get involved.
+        </p>
+
+        <a asp-controller="VolunteerActions"
+           asp-action="Index"
+           class="btn btn-primary">
+
+            Find an Opportunity
+
+        </a>
+
+    </div>
+}
+
+
+<!-- RECENT APPLICATIONS -->
+
+<div class="d-flex flex-wrap justify-content-between align-items-end gap-3 mb-3">
+
+    <div>
+
+        <div class="section-eyebrow">
+            Activity
+        </div>
+
+        <h2 class="h3 mb-0">
+            Recent Applications
+        </h2>
+
+    </div>
+
+
+    <a asp-controller="ParticipationRequests"
+       asp-action="MyRequests"
+       class="btn btn-outline-primary">
+
+        View All
+
+    </a>
+
+</div>
+
+
+@if (Model.RecentApplications.Any())
+{
+    <div class="card">
+
+        <div class="table-responsive">
+
+            <table class="table mb-0">
+
+                <thead>
+
+                    <tr>
+
+                        <th class="ps-4">
+                            Opportunity
+                        </th>
+
+                        <th>
+                            Shift
+                        </th>
+
+                        <th>
+                            Applied
+                        </th>
+
+                        <th>
+                            Status
+                        </th>
+
+                        <th class="text-end pe-4">
+                            Details
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                    @foreach (var request in Model.RecentApplications)
+                    {
+                        <tr>
+
+                            <td class="ps-4">
+
+                                <div class="fw-semibold">
+                                    @request.Shift.VolunteerAction.Title
+                                </div>
+
+                                @if (request.Shift.VolunteerAction.City != null)
+                                {
+                                    <div class="text-muted small">
+                                        @request.Shift.VolunteerAction.City.Name
+                                    </div>
+                                }
+
+                            </td>
+
+
+                            <td>
+                                @request.Shift.Title
+                            </td>
+
+
+                            <td>
+                                @request.ApplicationDate.ToString("dd MMM yyyy")
+                            </td>
+
+
+                            <td>
+
+                                @switch (request.Status)
+                                {
+                                    case ParticipationRequestStatuses.Pending:
+
+                                        <span class="badge bg-warning text-dark">
+                                            Pending
+                                        </span>
+
+                                        break;
+
+
+                                    case ParticipationRequestStatuses.Approved:
+
+                                        <span class="badge bg-success">
+                                            Approved
+                                        </span>
+
+                                        break;
+
+
+                                    case ParticipationRequestStatuses.Waitlist:
+
+                                        <span class="badge bg-info">
+                                            Waitlist
+                                        </span>
+
+                                        break;
+
+
+                                    case ParticipationRequestStatuses.Rejected:
+
+                                        <span class="badge bg-danger">
+                                            Rejected
+                                        </span>
+
+                                        break;
+
+
+                                    case ParticipationRequestStatuses.Completed:
+
+                                        <span class="badge bg-dark">
+                                            Completed
+                                        </span>
+
+                                        break;
+
+
+                                    case ParticipationRequestStatuses.Cancelled:
+
+                                        <span class="badge bg-secondary">
+                                            Cancelled
+                                        </span>
+
+                                        break;
+
+
+                                    default:
+
+                                        <span class="badge bg-secondary">
+                                            @request.Status
+                                        </span>
+
+                                        break;
+                                }
+
+                            </td>
+
+
+                            <td class="text-end pe-4">
+
+                                <a asp-controller="VolunteerActions"
+                                   asp-action="Details"
+                                   asp-route-id="@request.Shift.VolunteerActionId"
+                                   class="btn btn-sm btn-outline-primary">
+
+                                    View
+
+                                </a>
+
+                            </td>
+
+                        </tr>
+                    }
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+}
+else
+{
+    <div class="eco-panel text-center py-5">
+
+        <div class="mb-3"
+             style="font-size: 3rem;">
+            🤝
+        </div>
+
+        <h3 class="h5">
+            Start your volunteering journey
+        </h3>
+
+        <p class="text-muted mb-4">
+            You haven't submitted any applications yet.
+        </p>
+
+        <a asp-controller="VolunteerActions"
+           asp-action="Index"
+           class="btn btn-primary">
+
+            Browse Opportunities
+
+        </a>
+
+    </div>
+}
