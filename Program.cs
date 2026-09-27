@@ -52,6 +52,8 @@ builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
 
+var logger = app.Logger;
+
 
 // ---------------------------------------------------------
 // CREATE ROLES + OPTIONAL ADMIN ACCOUNT
@@ -96,8 +98,9 @@ using (var scope = app.Services.CreateScope())
             {
                 foreach (var error in roleResult.Errors)
                 {
-                    Console.WriteLine(
-                        $"Role creation error: {error.Description}");
+                    logger.LogError(
+                        "Role creation error: {Description}",
+                        error.Description);
                 }
             }
         }
@@ -171,8 +174,9 @@ using (var scope = app.Services.CreateScope())
             {
                 foreach (var error in createResult.Errors)
                 {
-                    Console.WriteLine(
-                        $"Admin creation error: {error.Description}");
+                    logger.LogError(
+                        "Admin creation error: {Description}",
+                        error.Description);
                 }
 
 
@@ -197,16 +201,17 @@ using (var scope = app.Services.CreateScope())
             {
                 foreach (var error in roleResult.Errors)
                 {
-                    Console.WriteLine(
-                        $"Admin role error: {error.Description}");
+                    logger.LogError(
+                        "Admin role assignment error: {Description}",
+                        error.Description);
                 }
             }
         }
     }
     else
     {
-        Console.WriteLine(
-            "Admin seed skipped. SeedAdmin credentials are not configured.");
+        logger.LogInformation(
+            "Admin seed skipped because SeedAdmin credentials are not configured.");
     }
 }
 
