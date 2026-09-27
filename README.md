@@ -4,7 +4,7 @@ VolunteerHub is a full-stack volunteer management web application built with ASP
 
 It connects volunteers with community opportunities while providing organizers with tools to create activities, manage shifts, review applications, track attendance and monitor participation.
 
-The project was developed as a portfolio application with a focus on clean architecture, role-based authorization, business rules, security and real-world workflow management.
+The project was developed as a portfolio application with a focus on role-based authorization, business rules, security, maintainability and real-world workflow management.
 
 ---
 
@@ -14,7 +14,7 @@ Deployment is currently being prepared.
 
 **Live Demo:** Coming soon
 
-Demo accounts will be available for both Volunteer and Organizer roles.
+Demo accounts are available for both Volunteer and Organizer roles.
 
 ---
 
@@ -38,26 +38,63 @@ The administrator account is intentionally not publicly shared.
 
 ---
 
-## Screenshots
+# Screenshots
 
-Screenshots of the application will be added before the final portfolio release.
+## Home Page
 
-Planned screenshots include:
-
-- Home Page
-- Volunteer Opportunities
-- Opportunity Details
-- Volunteer Dashboard
-- My Applications
-- Organizer Dashboard
-- My Volunteer Actions
-- Volunteer Applications
-- Organizer Statistics
-- Admin Dashboard
+![VolunteerHub Home Page](docs/screenshots/01-home.png)
 
 ---
 
-## Main Features
+## Volunteer Opportunities
+
+Search and filter volunteering opportunities by category, country, city and date.
+
+![Volunteer Opportunities](docs/screenshots/02-opportunities.png)
+
+---
+
+## Opportunity Details
+
+View opportunity information, location, schedule and available volunteer shifts.
+
+![Opportunity Details](docs/screenshots/03-opportunity-details.png)
+
+---
+
+## Volunteer Dashboard
+
+Volunteers can monitor applications, approvals, completed activities and their overall participation.
+
+![Volunteer Dashboard](docs/screenshots/04-volunteer-dashboard.png)
+
+---
+
+## My Applications
+
+Volunteers can track application status, attendance and participation history.
+
+![My Applications](docs/screenshots/05-my-applications.png)
+
+---
+
+## Organizer Dashboard
+
+Organizers receive an overview of their opportunities, volunteers, applications and available capacity.
+
+![Organizer Dashboard](docs/screenshots/06-organizer-dashboard.png)
+
+---
+
+## Organizer Statistics
+
+The statistics dashboard provides insight into opportunities, applications, volunteers and community impact.
+
+![Organizer Statistics](docs/screenshots/07-organizer-statistics.png)
+
+---
+
+# Main Features
 
 VolunteerHub supports three application roles:
 
@@ -135,7 +172,7 @@ Administrator credentials are not included in the public repository.
 
 ---
 
-## Opportunity Lifecycle
+# Opportunity Lifecycle
 
 Volunteer opportunities follow a controlled status workflow:
 
@@ -163,7 +200,7 @@ Invalid status transitions are prevented by server-side business rules.
 
 ---
 
-## Participation Request Lifecycle
+# Participation Request Lifecycle
 
 Volunteer applications support the following statuses:
 
@@ -178,7 +215,7 @@ The application also records whether a volunteer attended an approved shift.
 
 ---
 
-## Business Rules
+# Business Rules
 
 VolunteerHub contains server-side validation for important workflow rules.
 
@@ -207,11 +244,9 @@ These rules are enforced server-side rather than relying only on the user interf
 
 ---
 
-## Location System
+# Location System
 
 VolunteerHub uses structured location data instead of free-text locations.
-
-The application currently includes seeded countries and cities.
 
 Users select:
 
@@ -223,11 +258,11 @@ City
 
 City options are dynamically filtered based on the selected country.
 
-Each city belongs to a country using relational database entities.
+Each city belongs to a country through relational database entities.
 
 ---
 
-## Time Zone Support
+# Time Zone Support
 
 VolunteerHub contains explicit time-zone handling for volunteer opportunities.
 
@@ -238,10 +273,10 @@ Opportunity schedules and shift schedules are treated as local times for the cou
 Examples:
 
 ```text
-Switzerland → Europe/Zurich
-Greece      → Europe/Athens
-Germany     → Europe/Berlin
-United Kingdom → Europe/London
+Switzerland       → Europe/Zurich
+Greece            → Europe/Athens
+Germany           → Europe/Berlin
+United Kingdom    → Europe/London
 ```
 
 Time-sensitive business rules use the opportunity's local time, including:
@@ -259,7 +294,7 @@ This avoids depending on the physical location or time zone of the web server.
 
 ---
 
-## Security
+# Security
 
 VolunteerHub uses ASP.NET Core Identity for authentication and authorization.
 
@@ -278,13 +313,13 @@ Security features include:
 - Development secrets stored using .NET User Secrets
 - No production credentials stored in the repository
 
-The administrator seed account reads its credentials from configuration rather than hard-coded source code.
+Administrator and demo seed credentials are read from configuration rather than being hard-coded in source code.
 
 ---
 
-## Technologies
+# Technologies
 
-### Backend
+## Backend
 
 - C#
 - .NET 10
@@ -292,13 +327,13 @@ The administrator seed account reads its credentials from configuration rather t
 - ASP.NET Core Identity
 - Entity Framework Core
 
-### Database
+## Database
 
 - SQL Server
 - SQL Server LocalDB
 - Entity Framework Core Migrations
 
-### Frontend
+## Frontend
 
 - Razor Views
 - HTML5
@@ -306,7 +341,7 @@ The administrator seed account reads its credentials from configuration rather t
 - Bootstrap
 - JavaScript
 
-### Development Tools
+## Development Tools
 
 - Visual Studio
 - SQL Server LocalDB
@@ -315,7 +350,7 @@ The administrator seed account reads its credentials from configuration rather t
 
 ---
 
-## Architecture
+# Architecture
 
 The application follows the ASP.NET Core MVC pattern.
 
@@ -331,16 +366,18 @@ VolunteerHub
 ├── Views
 ├── Areas
 │   └── Identity
+├── docs
+│   └── screenshots
 ├── wwwroot
 ├── Program.cs
 └── appsettings.json
 ```
 
-### Controllers
+## Controllers
 
 Handle HTTP requests, authorization and application workflows.
 
-### Models
+## Models
 
 Represent database entities such as:
 
@@ -351,15 +388,15 @@ Represent database entities such as:
 - Country
 - City
 
-### ViewModels
+## ViewModels
 
 Provide data specifically designed for application views and dashboards.
 
-### Services
+## Services
 
 Contain reusable application services such as time-zone handling.
 
-### Data
+## Data
 
 Contains:
 
@@ -371,7 +408,7 @@ Contains:
 
 ---
 
-## Database Relationships
+# Database Relationships
 
 The main application relationships include:
 
@@ -393,13 +430,11 @@ Organizers own volunteer actions, while volunteers submit participation requests
 
 ---
 
-## Database Setup
+# Database Setup
 
 The project uses Entity Framework Core migrations.
 
-### Visual Studio Package Manager Console
-
-Run:
+Using the Visual Studio Package Manager Console:
 
 ```powershell
 Update-Database
@@ -409,9 +444,9 @@ This creates or updates the local database using the included migrations.
 
 ---
 
-## Local Development
+# Local Development
 
-### Requirements
+## Requirements
 
 Install:
 
@@ -420,15 +455,15 @@ Install:
 - SQL Server LocalDB
 - Git
 
-### Clone the repository
+## Clone the Repository
 
 ```bash
-git clone <repository-url>
+git clone https://github.com/thrasosCH/VolunteerHub.git
 ```
 
 Open the solution in Visual Studio.
 
-### Database
+## Database
 
 The default development connection string uses SQL Server LocalDB:
 
@@ -447,18 +482,18 @@ Update-Database
 
 ---
 
-## Development Secrets
+# Development Secrets
 
 Sensitive account credentials should not be added to `appsettings.json` or committed to Git.
 
-For local development, use:
+For local development:
 
 ```text
 Right-click project
 → Manage User Secrets
 ```
 
-Example structure:
+Example configuration:
 
 ```json
 {
@@ -469,11 +504,11 @@ Example structure:
 }
 ```
 
-Additional demo account configuration can also be provided through User Secrets.
+Demo accounts can also be configured through User Secrets.
 
 ---
 
-## Database Initialization
+# Database Initialization
 
 At application startup, VolunteerHub can automatically:
 
@@ -486,9 +521,9 @@ Account credentials are read from configuration rather than being stored directl
 
 ---
 
-## Testing
+# Testing
 
-The core application workflow has been manually tested from end to end.
+The core application workflow has been manually tested end to end.
 
 Main tested lifecycle:
 
@@ -532,15 +567,15 @@ Additional validation testing includes:
 
 ---
 
-## Database Migration Verification
+# Database Migration Verification
 
-The complete migration history has also been tested against a clean database.
+The complete migration history has been tested against a clean database.
 
 This verifies that the application database can be created from scratch using only the migrations included in the repository.
 
 ---
 
-## Deployment
+# Deployment
 
 The application is being prepared for deployment using:
 
@@ -552,7 +587,7 @@ Production secrets and database credentials will be stored using Azure configura
 
 ---
 
-## Future Improvements
+# Future Improvements
 
 Possible future enhancements include:
 
@@ -564,14 +599,14 @@ Possible future enhancements include:
 - Organizer notifications
 - Advanced reporting
 - Pagination
-- Automated tests
+- Automated unit and integration tests
 - CI/CD with GitHub Actions
 - Additional countries and cities
 - Expanded time-zone support
 
 ---
 
-## Project Purpose
+# Project Purpose
 
 VolunteerHub was developed as a portfolio project to demonstrate practical knowledge of:
 
@@ -588,11 +623,11 @@ VolunteerHub was developed as a portfolio project to demonstrate practical knowl
 - Responsive web interfaces
 - Git and GitHub workflow
 
-The goal of the project is to demonstrate the design and implementation of a complete multi-role web application based on realistic business requirements.
+The goal is to demonstrate the design and implementation of a complete multi-role web application based on realistic business requirements.
 
 ---
 
-## Author
+# Author
 
 **Thrasyvoulos Charalampidis**
 
